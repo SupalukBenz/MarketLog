@@ -12,6 +12,12 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ *
+ * @author Supaluk
+ */
+
 public class ChangePage {
 
     public static void loadUI(String UI, BorderPane pane, Class appClass){

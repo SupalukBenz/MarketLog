@@ -1,5 +1,10 @@
 package program;
 
+/**
+ *
+ *
+ * @author Supaluk
+ */
 
 import java.time.LocalDate;
 import java.util.Date;

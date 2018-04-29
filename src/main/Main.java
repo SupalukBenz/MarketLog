@@ -38,7 +38,7 @@ public class Main extends Application {
                 }
             });
 
-            primaryStage.getIcons().add(new Image("/UI/Photos/MarketLogIcon.png"));
+            primaryStage.getIcons().add(new Image("/UI/photos/MarketLogIcon.png"));
             primaryStage.setTitle("Market Log");
             primaryStage.setScene(scene);
 //            primaryStage.initStyle(StageStyle.TRANSPARENT);

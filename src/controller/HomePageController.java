@@ -35,6 +35,7 @@ public class HomePageController {
     private void items(ActionEvent e){
         initializeColorBotton();
         changeColorButton(itemsButton);
+        ChangePage.loadUI("ItemsUI", pane, HomePageController.class);
     }
 
     @FXML

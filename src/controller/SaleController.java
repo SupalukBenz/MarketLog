@@ -1,4 +1,4 @@
-package program;
+package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -6,12 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import program.ChangePage;
 
 import java.io.IOException;
 import java.net.URL;
 
 
-public class Sale{
+public class SaleController {
 
     @FXML
     private AnchorPane pane;

@@ -6,6 +6,12 @@ import java.time.LocalDate;
 import java.sql.*;
 import com.mysql.jdbc.*;
 
+/**
+ *
+ *
+ * @author Supaluk
+ */
+
 public class Database {
 
     static final String USER = "benz";
@@ -55,6 +61,20 @@ public class Database {
         }
     }
 
+    public static ResultSet getAllData(String tableName){
+        ResultSet resultSet = null;
+        try {
+            connectDatabase();
+            resultSet = connection.createStatement().executeQuery("select * from " + tableName);
+
+        } catch (SQLException se){
+            System.out.println("Cannot return ResultSet");
+        }
+
+        return resultSet;
+
+    }
+
     public static String createStatement(Object ... values){
         StringBuilder data = new StringBuilder();
         data.append(" values(");
@@ -68,6 +88,7 @@ public class Database {
 
         return data.toString();
     }
+
 
 
 }
