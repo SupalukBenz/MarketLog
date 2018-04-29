@@ -1,37 +1,58 @@
 package main;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.rmi.server.ExportException;
 
 public class Main extends Application {
 
-    private static Stage stageSet;
-
-    /**
-     * Set stage for edit form other class
-     * @return stage for edit
-     */
-    public static Stage getStage() { return stageSet; }
+    private double x,y;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(final Stage primaryStage) throws Exception {
         try {
-            stageSet = primaryStage;
-            Parent root = (Parent) FXMLLoader.load(getClass().getResource("/UI/LoginUI.fxml"));
+            Parent root = (Parent) FXMLLoader.load(getClass().getResource(setFileName("/UI/HomePage.fxml")));
+//            stageSet = primaryStage;
+//            parent = root;
 
             Scene scene = new Scene(root);
+
+            root.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                }
+            });
+
+            root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    primaryStage.setX(event.getSceneX() - x);
+                    primaryStage.setY(event.getSceneY() - y);
+                }
+            });
+
+            primaryStage.getIcons().add(new Image("/UI/Photos/MarketLogIcon.png"));
             primaryStage.setTitle("Market Log");
             primaryStage.setScene(scene);
+//            primaryStage.initStyle(StageStyle.TRANSPARENT);
             primaryStage.sizeToScene();
             primaryStage.show();
+
         }catch (Exception e){
             e.printStackTrace();
         }
+
+    }
+
+    public String setFileName(String fileName){
+        return fileName;
 
     }
 

@@ -1,28 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="640.0" prefWidth="1080.0" style="-fx-background-color: #ecf2f9;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="640.0" prefWidth="1080.0" style="-fx-background-color: #9fbfdf;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomePageController">
    <children>
-      <AnchorPane layoutX="60.0" layoutY="93.0" prefHeight="451.0" prefWidth="960.0" style="-fx-background-color: #8cb3d9;">
-         <children>
-            <Button layoutX="68.0" layoutY="37.0" mnemonicParsing="false" prefHeight="129.0" prefWidth="139.0" style="-fx-background-color: none; -fx-background-image: Photos\box.png;" />
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="38.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@Photos/box.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <Label layoutX="60.0" layoutY="39.0" prefHeight="29.0" prefWidth="139.0" text="Welcome" textFill="#7e7ef2">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
+      <BorderPane fx:id="pane" prefHeight="627.0" prefWidth="1040.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox prefHeight="640.0" style="-fx-background-color: #2d5986;" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="127.0" prefWidth="242.0" style="-fx-background-color: #145252;">
+                     <children>
+                        <ImageView fitHeight="110.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Photos/MarketLogIcon.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#dashboard" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text=" Dashboard" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="74.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Photos/dashboard.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <JFXButton fx:id="reportButton" alignment="BASELINE_LEFT" onAction="#report" prefHeight="75.0" prefWidth="243.0" text=" Report" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="48.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Photos/analytics.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <JFXButton fx:id="itemsButton" alignment="BASELINE_LEFT" onAction="#items" prefHeight="75.0" prefWidth="243.0" text=" Items" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="48.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Photos/delivery-cart.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <JFXButton fx:id="saleButton" alignment="BASELINE_LEFT" onAction="#sale" prefHeight="75.0" prefWidth="243.0" text=" Sale" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="48.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Photos/sale.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <JFXButton fx:id="calendarButton" alignment="BASELINE_LEFT" onAction="#calendar" prefHeight="75.0" prefWidth="243.0" text=" Calendar" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="48.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Photos/calendar.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <JFXButton fx:id="helpButton" alignment="BASELINE_LEFT" onAction="#help" prefHeight="75.0" prefWidth="243.0" text=" Help" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="48.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Photos/question.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </left>
+      </BorderPane>
    </children>
 </AnchorPane>
