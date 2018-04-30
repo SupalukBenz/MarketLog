@@ -10,18 +10,20 @@ import javafx.beans.property.*;
 
 public class Items {
 
-    private final IntegerProperty num;
+//    private final IntegerProperty num;
     private final StringProperty name;
     private final StringProperty description;
     private final DoubleProperty price;
     private final IntegerProperty qty;
+    private final IntegerProperty test;
 
-    public Items(int num, String name, String description, double price, int qty) {
-        this.num = new SimpleIntegerProperty(num);
+
+    public Items(String name, String description, double price, int qty, int test) {
         this.name = new SimpleStringProperty(name);
         this.description = new SimpleStringProperty(description);
         this.price = new SimpleDoubleProperty(price);
         this.qty = new SimpleIntegerProperty(qty);
+        this.test = new SimpleIntegerProperty(test);
     }
 
     public String getName() {
@@ -42,9 +44,10 @@ public class Items {
         return qty.get();
     }
 
-    public int getNumber(){
-        return num.get();
-    }
+    public int getTest(){ return test.get(); }
+//    public int getNumber(){
+//        return num.get();
+//    }
 
 
 }

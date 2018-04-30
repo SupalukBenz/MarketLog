@@ -16,17 +16,17 @@
             <Font size="42.0" />
          </font>
       </Text>
-      <TableView fx:id="tableSale" layoutX="35.0" layoutY="163.0" prefHeight="422.0" prefWidth="716.0">
+      <TableView fx:id="tableSale" layoutX="35.0" layoutY="163.0" prefHeight="422.0" prefWidth="770.0">
         <columns>
-          <TableColumn prefWidth="92.0" text="Date" />
-          <TableColumn prefWidth="107.0" text="Receipt ID" />
-            <TableColumn minWidth="0.0" prefWidth="253.0" text="Company" />
-            <TableColumn minWidth="0.0" prefWidth="57.0" text="Qty" />
-            <TableColumn minWidth="0.0" prefWidth="132.0" text="Total" />
-            <TableColumn minWidth="0.0" prefWidth="74.0" text="Status" />
+          <TableColumn fx:id="date" prefWidth="99.0" text="Date" />
+          <TableColumn fx:id="receiptId" prefWidth="121.0" text="Receipt ID" />
+            <TableColumn fx:id="company" minWidth="0.0" prefWidth="279.0" text="Company" />
+            <TableColumn fx:id="qty" minWidth="0.0" prefWidth="51.0" text="Qty" />
+            <TableColumn fx:id="total" minWidth="0.0" prefWidth="130.0" text="Total" />
+            <TableColumn fx:id="status" minWidth="0.0" prefWidth="89.0" text="Status" />
         </columns>
       </TableView>
-      <JFXButton layoutX="581.0" layoutY="81.0" onAction="#handleAddOrder" prefHeight="58.0" prefWidth="170.0" ripplerFill="#f22020" style="-fx-background-color: #1f7a7a; -fx-background-radius: 70;" text="Add order" textFill="WHITE">
+      <JFXButton layoutX="635.0" layoutY="81.0" onAction="#handleAddOrder" prefHeight="58.0" prefWidth="170.0" ripplerFill="#f22020" style="-fx-background-color: #1f7a7a; -fx-background-radius: 70;" text="Add order" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -5,6 +5,7 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.sql.*;
 import com.mysql.jdbc.*;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -42,6 +43,7 @@ public class Database {
         }
     }
 
+
     public static void insertData(String tableName, Object ... values){
         Statement statement = null;
         connectDatabase();
@@ -59,6 +61,32 @@ public class Database {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static void deleteData(String tableName, String primaryKey, String value){
+        Statement statement = null;
+        connectDatabase();
+
+        try{
+            Class.forName(JDBC_DRIVER);
+            statement = connection.createStatement();
+
+            String sql = "delete from " + tableName + " where " + primaryKey + getName(value);
+            System.out.println(sql);
+            statement.execute(sql);
+        }catch (SQLException se){
+            System.out.println("Cannot delete data.");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    public static String getName(String value){
+        StringBuilder data = new StringBuilder();
+        data.append("=\"");
+        data.append(value);
+        data.append("\"");
+        return data.toString();
     }
 
     public static ResultSet getAllData(String tableName){

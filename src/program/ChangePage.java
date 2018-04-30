@@ -34,7 +34,7 @@ public class ChangePage {
     public static void changeUI(String fxmlPath, Pane pane) {
         try {
             URL url = ChangePage.class.getClassLoader().getResource(fxmlPath);
-            AnchorPane anotherPane = FXMLLoader.load(url);
+            AnchorPane anotherPane = (AnchorPane) FXMLLoader.load(url);
             pane.getChildren().setAll(anotherPane);
         }catch (IOException | NullPointerException e){
             e.printStackTrace();

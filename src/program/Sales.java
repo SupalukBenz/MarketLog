@@ -1,5 +1,10 @@
 package program;
 
+import javafx.beans.property.*;
+
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,62 +16,43 @@ import java.util.List;
 
 public class Sales {
 
-    private List<Items> items;
-    private LocalDate date;
-    private int receiptId;
-    private String company;
-    private int quantity;
+    private Date date;
+    private IntegerProperty receiptId;
+    private StringProperty company;
+    private IntegerProperty quantity;
     private boolean status;
-    private double total;
+    private DoubleProperty total;
+    private StringProperty dateToString;
 
-    public Sales(List<Items> items, LocalDate date, int receiptId, String company, int quantity, boolean status, double total) {
-        this.items = items;
+
+    public Sales(Date date, int receiptId, String company, int quantity, double total, boolean status) {
         this.date = date;
-        this.receiptId = receiptId;
-        this.company = company;
-        this.quantity = quantity;
+
+        this.receiptId = new SimpleIntegerProperty(receiptId);
+        this.company = new SimpleStringProperty(company);
+        this.quantity = new SimpleIntegerProperty(quantity);
         this.status = status;
-        this.total = total;
+        this.total = new SimpleDoubleProperty(total);
     }
 
-    public List<Items> getItems() {
-        return items;
-    }
-
-    public void setItems(List<Items> items) {
-        this.items = items;
-    }
-
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
     public int getReceiptId() {
-        return receiptId;
-    }
-
-    public void setReceiptId(int receiptId) {
-        this.receiptId = receiptId;
+        return receiptId.get();
     }
 
     public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
+        return company.get();
     }
 
     public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        return quantity.get();
     }
 
     public boolean isStatus() {
@@ -78,11 +64,8 @@ public class Sales {
     }
 
     public double getTotal() {
-        return total;
+        return total.get();
     }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
 }

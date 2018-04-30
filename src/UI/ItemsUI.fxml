@@ -17,7 +17,7 @@
             <Font size="39.0" />
          </font>
       </Text>
-      <JFXTextField fx:id="search" layoutX="125.0" layoutY="118.0" maxWidth="684.0" minWidth="388.0" prefHeight="44.0" prefWidth="491.0" promptText="Search">
+      <JFXTextField fx:id="search" layoutX="125.0" layoutY="118.0" maxWidth="684.0" minWidth="388.0" onKeyReleased="#filter" prefHeight="44.0" prefWidth="491.0" promptText="Search">
          <font>
             <Font size="19.0" />
          </font>
@@ -27,13 +27,13 @@
             <Image url="@photos/question.png" />
          </image>
       </ImageView>
-      <TableView fx:id="itemsTable" layoutX="43.0" layoutY="186.0" prefHeight="416.0" prefWidth="776.0">
+      <TableView fx:id="itemsTable" layoutX="43.0" layoutY="186.0" prefHeight="358.0" prefWidth="776.0">
         <columns>
-          <TableColumn fx:id="number" prefWidth="63.0" text="No." />
+            <TableColumn fx:id="test" prefWidth="60.0" text="No" />
           <TableColumn fx:id="name" prefWidth="297.0" text="Item name" />
             <TableColumn fx:id="description" prefWidth="192.0" text="Description" />
             <TableColumn fx:id="quantity" prefWidth="92.0" text="Qty" />
-            <TableColumn fx:id="price" prefWidth="131.0" text="Price" />
+            <TableColumn fx:id="price" prefWidth="134.0" text="Price" />
         </columns>
       </TableView>
       <Button fx:id="addButton" layoutX="644.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddItem" prefHeight="53.0" prefWidth="169.0" style="-fx-background-color: #1f7a7a; -fx-background-radius: 70;" text="Add Item" textFill="WHITE">
@@ -44,6 +44,18 @@
             <ImageView fitHeight="25.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@photos/plus.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="deleteButton" layoutX="43.0" layoutY="566.0" mnemonicParsing="false" onAction="#handleDeleteItem" prefHeight="26.0" prefWidth="148.0" style="-fx-background-color: #606060; -fx-background-radius: 10;" text="Delete Item" textFill="WHITE">
+         <font>
+            <Font size="17.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="25.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@photos/delete.png" />
                </image>
             </ImageView>
          </graphic>
