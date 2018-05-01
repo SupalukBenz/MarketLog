@@ -4,6 +4,7 @@ import javafx.beans.property.*;
 
 import java.sql.Date;
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
@@ -16,33 +17,28 @@ import java.util.List;
 
 public class Sales {
 
-    private Date date;
+    private StringProperty date;
     private IntegerProperty receiptId;
     private StringProperty company;
     private IntegerProperty quantity;
-    private boolean status;
     private DoubleProperty total;
-    private StringProperty dateToString;
+    private StringProperty status;
 
 
-    public Sales(Date date, int receiptId, String company, int quantity, double total, boolean status) {
-        this.date = date;
 
+    public Sales(String date, int receiptId, String company, int quantity, double total, String status) {
+        this.date = new SimpleStringProperty(date);
         this.receiptId = new SimpleIntegerProperty(receiptId);
         this.company = new SimpleStringProperty(company);
         this.quantity = new SimpleIntegerProperty(quantity);
-        this.status = status;
         this.total = new SimpleDoubleProperty(total);
+        this.status = new SimpleStringProperty(status);
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public String getDate(){
+        return date.get();
     }
-
     public int getReceiptId() {
         return receiptId.get();
     }
@@ -55,16 +51,12 @@ public class Sales {
         return quantity.get();
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
     public double getTotal() {
         return total.get();
+    }
+
+    public String getStatus(){
+        return status.get();
     }
 
 

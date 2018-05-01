@@ -45,9 +45,6 @@ public class Items {
     }
 
     public int getTest(){ return test.get(); }
-//    public int getNumber(){
-//        return num.get();
-//    }
 
 
 }

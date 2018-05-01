@@ -71,8 +71,6 @@ public class ItemsAddController {
         return false;
     }
 
-
-
     private void addToDatabase(){
 
         nameItem = nameAdd.getText();
