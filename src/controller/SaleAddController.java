@@ -15,7 +15,9 @@ import program.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -54,16 +56,21 @@ public class SaleAddController {
     @FXML
     private ComboBox status;
 
+    @FXML
+    private Button backButton;
+
     private ResultSet rs = null;
 
-    private String get;
+    private String get, statusAdd;
+
+    private double totalSave = 0;
 
     private int num = 1;
 
     @FXML
     public void initialize() {
-        Database.deleteAllData("orders");
         addListToTable();
+        orderToTable();
     }
 
     private void addListToTable(){
@@ -77,6 +84,12 @@ public class SaleAddController {
     private void handleSelectItem(){
         get = listOfItem.getValue().toString();
         showDescription(get);
+    }
+
+    @FXML
+    private void handleSelectStatus(){
+        statusAdd = status.getValue().toString();
+        System.out.println("status : " + statusAdd);
     }
 
     @FXML
@@ -96,8 +109,7 @@ public class SaleAddController {
     }
 
     private boolean isCheckAll(){
-        if(!total.getText().trim().isEmpty() && !qtyAdd.getText().trim().isEmpty() && !totalFromQty.getText().trim().isEmpty()
-                && !amount.getText().trim().isEmpty() && !vat.getText().trim().isEmpty() && !companyAdd.getText().trim().isEmpty()) return true;
+        if(!total.getText().trim().isEmpty() && !amount.getText().trim().isEmpty() && !vat.getText().trim().isEmpty() && !companyAdd.getText().trim().isEmpty()) return true;
         return false;
     }
 
@@ -171,18 +183,8 @@ public class SaleAddController {
                 Database.insertData("orders",  item, description, qty, (totalItem*qty));
             }
 
-//            ObservableList<Order> allOrder = FXCollections.observableArrayList();
-//            ObservableList<Order> orderSelected = FXCollections.observableArrayList();
-//            allOrder = orderTable.getItems();
-//            for(Order order: orderTable.getItems()){
-//                if(order.getItem().equals(item)){
-//                    orderSelected.add(order);
-//                    num -= 1;
-//                }
-//            }
-//            orderSelected.forEach(allOrder::remove);
-            orderToTable();
-            System.out.println(orderTable.getItems().size());
+            ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
+
             qtyAdd.clear();
             totalFromQty.clear();
         }
@@ -220,15 +222,39 @@ public class SaleAddController {
         qtyAdd.setEditable(false);
         listOfItem.setEditable(false);
 
-        List<String> statusAdd = new ArrayList<>();
-        statusAdd.add("paid");
-        statusAdd.add("unpaid");
-        status.getItems().addAll(statusAdd);
+
+        status.getItems().addAll("paid", "unpaid");
         status.getSelectionModel().select(0);
+    }
+
+    @FXML
+    private void handleSaveOrder(ActionEvent event){
+        if(isCheckAll()) {
+            String company = companyAdd.getText();
+            LocalDate date = LocalDate.now();
+            String dateOrder = date.toString();
+            Database.insertData("sales", dateOrder, EditValue.getReceiptId(), company, EditValue.compoundItems(), EditValue.getQtySales(), Double.parseDouble(total.getText()), statusAdd);
+
+            Database.deleteAllData("orders");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Added Order");
+            alert.setHeaderText(null);
+            alert.setContentText("Adding order, Successful!");
+
+            alert.showAndWait();
+            backButton.fire();
+        }
 
     }
 
-
+    @FXML
+    private void handleCancelButton(ActionEvent event){
+        qtyAdd.setEditable(true);
+        listOfItem.setEditable(true);
+        amount.setText("");
+        vat.setText("");
+        total.setText("");
+    }
 
 
 }

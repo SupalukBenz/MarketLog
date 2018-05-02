@@ -97,33 +97,13 @@ public class SaleController{
 
     @FXML
     private void filter(KeyEvent key){
-        initFilter();
+        Sales.initFilter(search, tableSale, observableList);
     }
 
-    public void initFilter() {
-        search.textProperty().addListener(new InvalidationListener() {
-            @Override
-            public void invalidated(Observable observable) {
-                if(search.textProperty().get().isEmpty()){
-                    tableSale.setItems(observableList);
-                    return;
-                }
-                ObservableList<Sales> tableData = FXCollections.observableArrayList();
-                ObservableList<TableColumn<Sales, ?>> cols = tableSale.getColumns();
 
-                for(int i=0; i<observableList.size(); i++){
-
-                    for(int k=0; k<cols.size(); k++){
-                        TableColumn col = cols.get(k);
-                        String data = col.getCellData(observableList.get(i)).toString().toLowerCase();
-                        if(data.contains(search.textProperty().get().toLowerCase())){
-                            tableData.add(observableList.get(i));
-                            break;
-                        }
-                    }
-                }
-                tableSale.setItems(tableData);
-            }
-        });
+    @FXML
+    private void handleUpdateStatus(){
+//        ChangePage.changeUI("UI/SaleStatusUI.fxml", pane);
+        Database.deleteAllData("sales");
     }
 }

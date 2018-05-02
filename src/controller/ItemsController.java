@@ -8,19 +8,18 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import program.ChangePage;
 import program.Database;
+import program.EditValue;
 import program.Items;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 
@@ -131,6 +130,44 @@ public class ItemsController {
 
     }
 
+    @FXML
+    private void handleUpdateItem(){
+        ObservableList<Items> itemForAdd = itemsTable.getSelectionModel().getSelectedItems();
+        String item = itemForAdd.get(0).getName();
+        inputDialog(item);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Added stock");
+        alert.setHeaderText(null);
+        alert.setContentText("Adding stock, Successful!");
 
+        alert.showAndWait();
+
+        ChangePage.changeUI("UI/ItemsUI.fxml", pane);
+
+    }
+
+    private void inputDialog(String item){
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle("Add Stock");
+        dialog.setHeaderText(item);
+        dialog.setContentText("Enter stock:");
+
+        Optional<String> result = dialog.showAndWait();
+        if(!result.get().trim().matches("^[\\d]+$") || result.get().equals("")){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Cannot add stock.");
+            alert.setContentText("Invalid value or Incomplete information.");
+
+            alert.showAndWait();
+        }else {
+            int qty = Integer.parseInt(result.get());
+            addStock(qty, item);
+        }
+    }
+
+    private void addStock(int result, String item){
+        EditValue.updateStock(item, result);
+    }
 
 }

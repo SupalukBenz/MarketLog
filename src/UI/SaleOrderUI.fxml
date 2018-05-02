@@ -42,7 +42,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="qtyAdd" alignment="BASELINE_RIGHT" layoutX="139.0" layoutY="132.0" onKeyReleased="#handleQty" prefHeight="29.0" prefWidth="83.0">
+      <TextField fx:id="qtyAdd" alignment="BASELINE_RIGHT" layoutX="144.0" layoutY="129.0" onKeyReleased="#handleQty" prefHeight="29.0" prefWidth="83.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -100,12 +100,12 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="saveButton" layoutX="615.0" layoutY="553.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="138.0" style="-fx-background-color: #606060;" text="SAVE" textFill="WHITE">
+      <Button fx:id="saveButton" layoutX="610.0" layoutY="564.0" mnemonicParsing="false" onAction="#handleSaveOrder" prefHeight="37.0" prefWidth="138.0" style="-fx-background-color: #606060;" text="SAVE" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <JFXComboBox fx:id="status" layoutX="569.0" layoutY="516.0" prefHeight="27.0" prefWidth="213.0" />
+      <JFXComboBox fx:id="status" layoutX="569.0" layoutY="516.0" onAction="#handleSelectStatus" prefHeight="27.0" prefWidth="213.0" />
       <TableView fx:id="orderTable" layoutX="16.0" layoutY="188.0" prefHeight="199.0" prefWidth="746.0">
         <columns>
           <TableColumn fx:id="numberTable" prefWidth="57.0" text="No." />
@@ -120,7 +120,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="companyAdd" alignment="BASELINE_RIGHT" layoutX="485.0" layoutY="480.0" prefHeight="29.0" prefWidth="333.0">
+      <TextField fx:id="companyAdd" alignment="BASELINE_LEFT" layoutX="485.0" layoutY="480.0" prefHeight="29.0" prefWidth="333.0">
          <font>
             <Font size="15.0" />
          </font>
@@ -157,7 +157,12 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Button fx:id="submitButton" layoutX="314.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleSubmitButton" prefHeight="54.0" prefWidth="147.0" style="-fx-background-color: #132639; -fx-background-radius: 10;" text="SUBMIT" textFill="WHITE">
+      <Button fx:id="submitButton" layoutX="314.0" layoutY="399.0" mnemonicParsing="false" onAction="#handleSubmitButton" prefHeight="54.0" prefWidth="161.0" style="-fx-background-color: #132639; -fx-background-radius: 10;" text="SUBMIT" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="487.0" layoutY="424.0" mnemonicParsing="false" onAction="#handleCancelButton" prefHeight="29.0" prefWidth="89.0" style="-fx-background-color: #606060;" text="CANCEL" textFill="WHITE">
          <font>
             <Font size="15.0" />
          </font>

@@ -1,14 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="870.0" style="-fx-background-color: #9fbfdf;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="program.Dashboard">
    <children>
-      <Text fill="WHITE" layoutX="61.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard" underline="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="275.0" layoutX="308.0" layoutY="82.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="531.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="275.0" layoutX="318.0" layoutY="92.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" width="531.0" />
+      <HBox layoutX="34.0" layoutY="385.0" prefHeight="200.0" prefWidth="816.0">
+         <children>
+            <VBox prefHeight="204.0" prefWidth="275.0">
+               <children>
+                  <AnchorPane prefHeight="53.0" prefWidth="288.0" style="-fx-background-color: #F8F8F8;">
+                     <children>
+                        <Text layoutX="55.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sale Order" wrappingWidth="145.19873046875">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="24.0" fitWidth="39.0" layoutX="21.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@photos/warehouse.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="153.0" prefWidth="277.0" style="-fx-background-color: #484848;">
+                     <children>
+                        <Text fill="WHITE" layoutX="18.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total order" wrappingWidth="145.19873046875">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="totalOrder" layoutX="20.0" layoutY="50.0" prefHeight="49.0" prefWidth="197.0" text="0" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Text fill="WHITE" layoutX="237.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order" wrappingWidth="39.18902587890625">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="220.0" prefWidth="9.0" style="-fx-background-color: #989898;" />
+            <VBox prefHeight="187.0" prefWidth="288.0">
+               <children>
+                  <AnchorPane prefHeight="53.0" prefWidth="288.0" style="-fx-background-color: #F8F8F8;">
+                     <children>
+                        <Text layoutX="55.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Outstanding" wrappingWidth="145.19873046875">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <ImageView fitHeight="37.0" fitWidth="30.0" layoutX="21.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@photos/loading.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="153.0" prefWidth="277.0" style="-fx-background-color: #484848;">
+                     <children>
+                        <Text fill="WHITE" layoutX="11.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unpaid" wrappingWidth="62.642486572265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Label fx:id="unpaidOrder" layoutX="10.0" layoutY="50.0" prefHeight="49.0" prefWidth="222.0" text="0" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <Text fill="WHITE" layoutX="235.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baht" wrappingWidth="39.18902587890625">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                        </Text>
+                        <Label alignment="BASELINE_RIGHT" layoutX="84.0" layoutY="16.0" prefHeight="32.0" prefWidth="109.0" text="0" textFill="WHITE">
+                           <font>
+                              <Font size="17.0" />
+                           </font>
+                        </Label>
+                        <Text fill="WHITE" layoutX="204.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order" wrappingWidth="62.642486572265625">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <AnchorPane prefHeight="200.0" prefWidth="244.0" style="-fx-background-color: #9fbfdf; -fx-background-radius: 0;">
+               <children>
+                  <ProgressIndicator fx:id="totalPayment" layoutX="44.0" layoutY="20.0" prefHeight="141.0" prefWidth="132.0" progress="0.0" />
+                  <Text fill="#989898" layoutX="35.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Payment" textAlignment="CENTER" wrappingWidth="145.19873046875">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="19.0" style="-fx-background-color: #989898;" />
+         </children>
+      </HBox>
+      <VBox layoutX="326.0" layoutY="101.0" prefHeight="242.0" prefWidth="236.0">
+         <children>
+            <AnchorPane prefHeight="242.0" prefWidth="201.0" style="-fx-background-color: #484848; -fx-background-radius: 0;">
+               <children>
+                  <Circle fill="#1f93ff00" layoutX="114.0" layoutY="131.0" radius="70.0" stroke="#83ddc6" strokeType="INSIDE" strokeWidth="3.0" style="-fx-stroke-dash-array: 120;" />
+                  <Text fill="#83ddc6" layoutX="44.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Stock" textAlignment="CENTER" wrappingWidth="145.19873046875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="currentStock" alignment="CENTER" layoutY="95.0" prefHeight="64.0" prefWidth="233.0" text="0" textFill="WHITE">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox layoutX="586.0" layoutY="98.0" prefHeight="242.0" prefWidth="236.0">
+         <children>
+            <AnchorPane prefHeight="242.0" prefWidth="201.0" style="-fx-background-color: #484848; -fx-background-radius: 0;">
+               <children>
+                  <Circle fill="#1f93ff00" layoutX="114.0" layoutY="131.0" radius="70.0" stroke="#ddb2c4" strokeType="INSIDE" strokeWidth="3.0" style="-fx-stroke-dash-array: 120;" />
+                  <Text fill="#ddb2c4" layoutX="44.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zero Stock Item" textAlignment="CENTER" wrappingWidth="145.19873046875">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <Label fx:id="zeroStock" alignment="CENTER" layoutX="5.0" layoutY="96.0" prefHeight="64.0" prefWidth="224.0" text="0" textFill="WHITE">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#96a6b53c" height="188.0" layoutX="28.0" layoutY="119.0" stroke="WHITE" strokeType="INSIDE" width="259.0" />
+      <Text fill="WHITE" layoutX="82.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sale Amount" textAlignment="CENTER" wrappingWidth="145.19873046875">
          <font>
-            <Font size="39.0" />
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <Label fx:id="saleAmount" alignment="CENTER" layoutX="46.0" layoutY="222.0" prefHeight="48.0" prefWidth="223.0" text="0" textFill="WHITE">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="37.0" fitWidth="30.0" layoutX="140.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@photos/money-bag-with-dollar-symbol.png" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="137.0" layoutY="290.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(Baht)" textAlignment="CENTER" wrappingWidth="39.18902587890625">
+         <font>
+            <Font size="12.0" />
+         </font>
+      </Text>
+      <Text fill="#00000081" layoutX="28.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="DASHBOARD" underline="true" wrappingWidth="197.459239776441">
+         <font>
+            <Font size="31.0" />
          </font>
       </Text>
    </children>

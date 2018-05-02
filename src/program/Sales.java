@@ -1,6 +1,14 @@
 package program;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 import java.sql.Date;
 import java.text.DateFormat;
@@ -59,5 +67,30 @@ public class Sales {
         return status.get();
     }
 
+    public static void initFilter(TextField search, TableView<Sales> tableSale, ObservableList<Sales> observableList) {
+        search.textProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                if(search.textProperty().get().isEmpty()){
+                    tableSale.setItems(observableList);
+                    return;
+                }
+                ObservableList<Sales> tableData = FXCollections.observableArrayList();
+                ObservableList<TableColumn<Sales, ?>> cols = tableSale.getColumns();
 
+                for(int i=0; i<observableList.size(); i++){
+
+                    for(int k=0; k<cols.size(); k++){
+                        TableColumn col = cols.get(k);
+                        String data = col.getCellData(observableList.get(i)).toString().toLowerCase();
+                        if(data.contains(search.textProperty().get().toLowerCase())){
+                            tableData.add(observableList.get(i));
+                            break;
+                        }
+                    }
+                }
+                tableSale.setItems(tableData);
+            }
+        });
+    }
 }
