@@ -24,7 +24,6 @@ public class Sales {
     private DoubleProperty total;
     private StringProperty status;
 
-
     public Sales(String date, int receiptId, String company, int quantity, double total, String status) {
         this.date = new SimpleStringProperty(date);
         this.receiptId = new SimpleIntegerProperty(receiptId);
@@ -85,4 +84,5 @@ public class Sales {
             }
         });
     }
+
 }

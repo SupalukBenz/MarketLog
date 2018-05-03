@@ -6,15 +6,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import program.*;
 
 import java.io.IOException;
@@ -54,7 +56,7 @@ public class SaleController{
     @FXML
     private TextField search;
 
-
+    private static int idDetail;
 
     ObservableList<Sales> observableList = FXCollections.observableArrayList();
 
@@ -106,6 +108,38 @@ public class SaleController{
 
     @FXML
     private void handleShowDetail(){
+        if(checkClickTable(tableSale)) {
+            ObservableList<Sales> salesList = tableSale.getSelectionModel().getSelectedItems();
+            idDetail = salesList.get(0).getReceiptId();
 
+            Parent root;
+            try {
+                root = (Parent) FXMLLoader.load(getClass().getResource("/UI/ShowDetailUI.fxml"));
+                Stage stage = new Stage();
+                stage.setTitle("Item Detail");
+                stage.setScene(new Scene(root, 600, 620));
+                stage.getIcons().add(new Image("/UI/photos/MarketLogIcon.png"));
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+    public static int getIdDetail(){
+        return idDetail;
+    }
+
+
+    private boolean checkClickTable(TableView<?> table){
+        if(table.getSelectionModel().getSelectedItems().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please, choose sale list in table.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
+    }
+
 }

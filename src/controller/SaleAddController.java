@@ -206,20 +206,6 @@ public class SaleAddController {
         return columnData;
     }
 
-//    private void addDetail(int receiptId){
-//
-//        List<Integer> columnQtyData = new ArrayList<>();
-//        List<Double> columnTotalData = new ArrayList<>();
-//        List<String> columnItemData = itemsInOrder();
-//
-//        for (Order item : orderTable.getItems()) {
-//            columnQtyData.add(qtyTable.getCellObservableValue(item).getValue());
-//            columnTotalData.add(totalTable.getCellObservableValue(item).getValue());
-//        }
-//
-//        Database.insertData("sale_id_details", receiptId, columnItemData, columnQtyData, columnTotalData);
-//    }
-
 
     @FXML
     private void handleDeleteButton(ActionEvent event){
