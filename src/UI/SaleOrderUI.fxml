@@ -67,7 +67,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="amount" alignment="BASELINE_RIGHT" layoutX="135.0" layoutY="468.0" prefHeight="27.0" prefWidth="161.0" />
+      <TextField fx:id="amount" alignment="BASELINE_RIGHT" editable="false" layoutX="135.0" layoutY="468.0" prefHeight="27.0" prefWidth="161.0" />
       <Text fill="WHITE" layoutX="315.0" layoutY="486.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baht">
          <font>
             <Font size="15.0" />
@@ -78,7 +78,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="vat" alignment="BASELINE_RIGHT" layoutX="135.0" layoutY="502.0" prefHeight="27.0" prefWidth="161.0" />
+      <TextField fx:id="vat" alignment="BASELINE_RIGHT" editable="false" layoutX="135.0" layoutY="502.0" prefHeight="27.0" prefWidth="161.0" />
       <Text fill="WHITE" layoutX="315.0" layoutY="520.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baht">
          <font>
             <Font size="15.0" />
@@ -89,7 +89,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField fx:id="total" alignment="BASELINE_RIGHT" layoutX="97.0" layoutY="555.0" prefHeight="27.0" prefWidth="198.0" />
+      <TextField fx:id="total" alignment="BASELINE_RIGHT" editable="false" layoutX="97.0" layoutY="555.0" prefHeight="27.0" prefWidth="198.0" />
       <Text fill="WHITE" layoutX="315.0" layoutY="574.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Baht">
          <font>
             <Font size="15.0" />

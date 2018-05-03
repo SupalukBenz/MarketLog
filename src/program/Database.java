@@ -82,6 +82,25 @@ public class Database {
         return observableList;
     }
 
+    public static ObservableList searchFromKeyId(String tableName, String key, int value, String result){
+        ObservableList observableList = FXCollections.observableArrayList();
+        PreparedStatement pre = null;
+        ResultSet rs = null;
+        String sql = "select " + result + " from " + tableName + " where " + key + "=" + value;
+        try {
+            connectDatabase();
+            pre = connection.prepareStatement(sql);
+            rs = pre.executeQuery();
+            while (rs.next()){
+                observableList.add(rs.getString(result));
+            }
+        } catch (SQLException se){
+            System.out.println("Cannot search ID");
+            se.printStackTrace();
+        }
+        return observableList;
+    }
+
 
     public static void insertData(String tableName, Object ... values){
         Statement statement = null;

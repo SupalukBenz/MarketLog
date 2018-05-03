@@ -1,7 +1,7 @@
 <component name="libraryTable">
   <library name="jfoenix">
     <CLASSES>
-      <root url="jar://$USER_HOME$/Downloads/jfoenix.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dataLib/jfoenix.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

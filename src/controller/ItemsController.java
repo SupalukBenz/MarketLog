@@ -121,28 +121,43 @@ public class ItemsController {
 
     @FXML
     private void handleDeleteItem(){
-        ObservableList<Items> itemsSelected, allItems;
-        allItems = itemsTable.getItems();
-        itemsSelected = itemsTable.getSelectionModel().getSelectedItems();
-        System.out.println(itemsSelected.get(0).getName());
-        Database.deleteData("items", "name_item", itemsSelected.get(0).getName());
-        itemsSelected.forEach(allItems::remove);
+        if(checkClickTable(itemsTable)) {
+            ObservableList<Items> itemsSelected, allItems;
+            allItems = itemsTable.getItems();
+            itemsSelected = itemsTable.getSelectionModel().getSelectedItems();
+            System.out.println(itemsSelected.get(0).getName());
+            Database.deleteData("items", "name_item", itemsSelected.get(0).getName());
+            itemsSelected.forEach(allItems::remove);
+        }
 
+    }
+
+    private boolean checkClickTable(TableView<?> table){
+        if(table.getSelectionModel().getSelectedItems().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please, choose item list in table.");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 
     @FXML
     private void handleUpdateItem(){
-        ObservableList<Items> itemForAdd = itemsTable.getSelectionModel().getSelectedItems();
-        String item = itemForAdd.get(0).getName();
-        inputDialog(item);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Added stock");
-        alert.setHeaderText(null);
-        alert.setContentText("Adding stock, Successful!");
+        if(checkClickTable(itemsTable)) {
+            ObservableList<Items> itemForAdd = itemsTable.getSelectionModel().getSelectedItems();
+            String item = itemForAdd.get(0).getName();
+            inputDialog(item);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Added stock");
+            alert.setHeaderText(null);
+            alert.setContentText("Adding stock, Successful!");
 
-        alert.showAndWait();
+            alert.showAndWait();
 
-        ChangePage.changeUI("UI/ItemsUI.fxml", pane);
+            ChangePage.changeUI("UI/ItemsUI.fxml", pane);
+        }
 
     }
 

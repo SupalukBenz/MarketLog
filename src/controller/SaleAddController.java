@@ -148,10 +148,18 @@ public class SaleAddController {
     private void handleQty(KeyEvent event){
         if(checkInteger() && isCheckForAdd()){
             String item = listOfItem.getValue().toString();
+            checkQtyStock();
             ObservableList tot = Database.searchFromKey("items", "name_item", item, "price_item");
             double result = Double.parseDouble(tot.get(0).toString());
             int qty = Integer.parseInt(qtyAdd.getText());
             totalFromQty.setText(String.valueOf(qty*result));
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Cannot sale item.");
+            alert.setContentText("Invalid value or Incomplete information.");
+            alert.showAndWait();
+            ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
         }
     }
 
@@ -185,8 +193,6 @@ public class SaleAddController {
 
             ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
 
-            qtyAdd.clear();
-            totalFromQty.clear();
         }
 
     }
@@ -199,6 +205,21 @@ public class SaleAddController {
 
         return columnData;
     }
+
+//    private void addDetail(int receiptId){
+//
+//        List<Integer> columnQtyData = new ArrayList<>();
+//        List<Double> columnTotalData = new ArrayList<>();
+//        List<String> columnItemData = itemsInOrder();
+//
+//        for (Order item : orderTable.getItems()) {
+//            columnQtyData.add(qtyTable.getCellObservableValue(item).getValue());
+//            columnTotalData.add(totalTable.getCellObservableValue(item).getValue());
+//        }
+//
+//        Database.insertData("sale_id_details", receiptId, columnItemData, columnQtyData, columnTotalData);
+//    }
+
 
     @FXML
     private void handleDeleteButton(ActionEvent event){
@@ -220,8 +241,6 @@ public class SaleAddController {
         vat.setText(String.valueOf(Order.sumVat()));
         total.setText(String.valueOf(Order.allTotal()));
         qtyAdd.setEditable(false);
-        listOfItem.setEditable(false);
-
 
         status.getItems().addAll("paid", "unpaid");
         status.getSelectionModel().select(0);
@@ -233,8 +252,12 @@ public class SaleAddController {
             String company = companyAdd.getText();
             LocalDate date = LocalDate.now();
             String dateOrder = date.toString();
-            Database.insertData("sales", dateOrder, EditValue.getReceiptId(), company, EditValue.compoundItems(), EditValue.getQtySales(), Double.parseDouble(total.getText()), statusAdd);
-
+            int receiptId = EditValue.getReceiptId();
+            EditValue.addDetailItems(receiptId);
+            Database.insertData("sales", dateOrder, receiptId, company,  EditValue.getQtySales(), Double.parseDouble(total.getText()), statusAdd);
+            if(statusAdd.equals("paid")){
+                EditValue.inventoryUpdate(orderList);
+            }
             Database.deleteAllData("orders");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Added Order");
@@ -250,10 +273,24 @@ public class SaleAddController {
     @FXML
     private void handleCancelButton(ActionEvent event){
         qtyAdd.setEditable(true);
-        listOfItem.setEditable(true);
         amount.setText("");
         vat.setText("");
         total.setText("");
+    }
+
+    private void checkQtyStock(){
+        ObservableList qtyStockList = Database.searchFromKey("items", "name_item", get, "quantity");
+        int qtyStock = Integer.parseInt(qtyStockList.get(0).toString());
+        int qtyCheck = Integer.parseInt(qtyAdd.getText());
+        if((qtyStock - qtyCheck) <= 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Cannot sale item.");
+            alert.setContentText("Out of stock.");
+            alert.showAndWait();
+            ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
+        }
+
     }
 
 

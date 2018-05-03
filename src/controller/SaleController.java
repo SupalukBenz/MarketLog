@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -103,7 +101,11 @@ public class SaleController{
 
     @FXML
     private void handleUpdateStatus(){
-//        ChangePage.changeUI("UI/SaleStatusUI.fxml", pane);
-        Database.deleteAllData("sales");
+        ChangePage.changeUI("UI/SaleStatusUI.fxml", pane);
+    }
+
+    @FXML
+    private void handleShowDetail(){
+
     }
 }

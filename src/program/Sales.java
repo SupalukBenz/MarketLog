@@ -5,17 +5,9 @@ import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.List;
 
 /**
  *
@@ -33,7 +25,6 @@ public class Sales {
     private StringProperty status;
 
 
-
     public Sales(String date, int receiptId, String company, int quantity, double total, String status) {
         this.date = new SimpleStringProperty(date);
         this.receiptId = new SimpleIntegerProperty(receiptId);
@@ -47,6 +38,7 @@ public class Sales {
     public String getDate(){
         return date.get();
     }
+
     public int getReceiptId() {
         return receiptId.get();
     }
