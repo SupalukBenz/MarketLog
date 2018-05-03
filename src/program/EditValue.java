@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditValue {
-    private static int qtySales = 0;
     public static void editingQtyOfItems(String item, int orderQty){
         ObservableList qtyItem = Database.searchFromKey("items", "name_item", item, "quantity");
         int currentQty = Integer.parseInt(qtyItem.get(0).toString());
@@ -28,18 +27,6 @@ public class EditValue {
         }
     }
 
-    public static void addDetailItems(int receipt){
-        ObservableList item = Database.selectItem("orders", "item_order");
-        ObservableList descrip = Database.selectItem("orders", "description_order");
-        ObservableList qty = Database.selectItem("orders", "qty_order");
-        ObservableList total = Database.selectItem("orders", "total_order");
-        int q = 0;
-        for(Object i: item){
-            Database.insertData("sale_id_details", getNumberDetail(), receipt, item.get(q), descrip.get(q), qty.get(q), total.get(q));
-            qtySales += Integer.parseInt((String) qty.get(q));
-            q++;
-        }
-    }
 
     public static void updateStock(String item, int quantity){
         ObservableList qtyItem = Database.searchFromKey("items", "name_item", item, "quantity");
@@ -67,31 +54,7 @@ public class EditValue {
     }
 
 
-    public static int getQtySales(){
-        return qtySales;
-    }
 
-    public static int getReceiptId(){
-        ObservableList id = Database.selectItem("sales", "receipt_id");
-
-        if(id == null || id.isEmpty()){
-            return 10001;
-        }else{
-            int currentId = Integer.parseInt((String) id.get(id.size() - 1));
-            return currentId + 1;
-        }
-    }
-
-    public static int getNumberDetail(){
-        ObservableList id = Database.selectItem("sale_id_details", "number_detail");
-
-        if(id == null || id.isEmpty()){
-            return 1;
-        }else{
-            int currentId = Integer.parseInt((String) id.get(id.size() - 1));
-            return currentId + 1;
-        }
-    }
 
 
 }

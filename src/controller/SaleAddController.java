@@ -65,6 +65,8 @@ public class SaleAddController {
 
     private double totalSave = 0;
 
+    private int qtySales = 0;
+
     private int num = 1;
 
     @FXML
@@ -83,6 +85,9 @@ public class SaleAddController {
     @FXML
     private void handleSelectItem(){
         get = listOfItem.getValue().toString();
+        descriptionShow.clear();
+        totalFromQty.clear();
+        qtyAdd.clear();
         showDescription(get);
     }
 
@@ -183,12 +188,13 @@ public class SaleAddController {
                     System.out.println("checked true find item = " + s);
                 }
             }
+
             if(check){
                 EditValue.editingQtyOfOrders(item, qty);
                 EditValue.editingTotalOfOrders(item, totalItem);
 
             }else {
-                Database.insertData("orders",  item, description, qty, (totalItem*qty));
+                Database.insertData("orders",  item, description, qty, totalItem);
             }
 
             ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
@@ -238,9 +244,9 @@ public class SaleAddController {
             String company = companyAdd.getText();
             LocalDate date = LocalDate.now();
             String dateOrder = date.toString();
-            int receiptId = EditValue.getReceiptId();
-            EditValue.addDetailItems(receiptId);
-            Database.insertData("sales", dateOrder, receiptId, company,  EditValue.getQtySales(), Double.parseDouble(total.getText()), statusAdd);
+            int receiptId = getReceiptId();
+            addDetailItems(receiptId);
+            Database.insertData("sales", dateOrder, receiptId, company,  qtySales , Double.parseDouble(total.getText()), statusAdd);
             if(statusAdd.equals("paid")){
                 EditValue.inventoryUpdate(orderList);
             }
@@ -256,12 +262,36 @@ public class SaleAddController {
 
     }
 
+    private void addDetailItems(int receipt) {
+        ObservableList item = Database.selectItem("orders", "item_order");
+        ObservableList descrip = Database.selectItem("orders", "description_order");
+        ObservableList qty = Database.selectItem("orders", "qty_order");
+        ObservableList total = Database.selectItem("orders", "total_order");
+        int q = 0;
+        for (Object i : item) {
+            Database.insertData("sale_id_details", getNumberDetail(), receipt, item.get(q), descrip.get(q), qty.get(q), total.get(q));
+            qtySales += Integer.parseInt((String) qty.get(q));
+            q++;
+        }
+    }
+
+    private int getNumberDetail(){
+        ObservableList id = Database.selectItem("sale_id_details", "number_detail");
+
+        if(id == null || id.isEmpty()){
+            return 1;
+        }else{
+            int currentId = Integer.parseInt((String) id.get(id.size() - 1));
+            return currentId + 1;
+        }
+    }
+
     @FXML
     private void handleCancelButton(ActionEvent event){
         qtyAdd.setEditable(true);
-        amount.setText("");
-        vat.setText("");
-        total.setText("");
+        amount.clear();
+        vat.clear();
+        total.clear();
     }
 
     private void checkQtyStock(){
@@ -277,6 +307,17 @@ public class SaleAddController {
             ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
         }
 
+    }
+
+    private int getReceiptId(){
+        ObservableList id = Database.selectItem("sales", "receipt_id");
+
+        if(id == null || id.isEmpty()){
+            return 10001;
+        }else{
+            int currentId = Integer.parseInt((String) id.get(id.size() - 1));
+            return currentId + 1;
+        }
     }
 
 

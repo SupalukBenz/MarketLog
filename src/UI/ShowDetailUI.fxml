@@ -75,12 +75,12 @@
             <Font size="12.0" />
          </font>
       </Text>
-      <Label fx:id="amount" layoutX="375.0" layoutY="435.0" prefHeight="31.0" prefWidth="155.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="amount" alignment="CENTER_RIGHT" layoutX="375.0" layoutY="435.0" prefHeight="31.0" prefWidth="155.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="vat" layoutX="375.0" layoutY="465.0" prefHeight="31.0" prefWidth="155.0" text="Label" textAlignment="CENTER">
+      <Label fx:id="vat" alignment="CENTER_RIGHT" layoutX="375.0" layoutY="465.0" prefHeight="31.0" prefWidth="155.0" text="Label" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>

@@ -103,7 +103,9 @@ public class SaleController{
 
     @FXML
     private void handleUpdateStatus(){
-        ChangePage.changeUI("UI/SaleStatusUI.fxml", pane);
+//        ChangePage.changeUI("UI/SaleStatusUI.fxml", pane);
+        Database.deleteAllData("sales");
+        Database.deleteAllData("sale_id_details");
     }
 
     @FXML
@@ -141,5 +143,7 @@ public class SaleController{
         }
         return true;
     }
+
+
 
 }

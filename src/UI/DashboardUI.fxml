@@ -120,8 +120,8 @@
             </VBox>
             <AnchorPane prefHeight="200.0" prefWidth="244.0" style="-fx-background-color: #9fbfdf; -fx-background-radius: 0;">
                <children>
-                  <ProgressIndicator fx:id="totalPayment" layoutX="44.0" layoutY="20.0" prefHeight="141.0" prefWidth="132.0" progress="0.0" />
-                  <Text fill="#989898" layoutX="35.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Payment" textAlignment="CENTER" wrappingWidth="145.19873046875">
+                  <ProgressIndicator fx:id="totalPayment" layoutX="54.0" layoutY="14.0" prefHeight="141.0" prefWidth="132.0" progress="0.0" />
+                  <Text fill="#989898" layoutX="47.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Payment" textAlignment="CENTER" wrappingWidth="145.19873046875">
                      <font>
                         <Font size="20.0" />
                      </font>

@@ -63,9 +63,11 @@ public class SaleDetailController {
 
         try {
             while (rs.next()){
-                observableList.add(new SalesDetail(rs.getString("item_detail"), num++,
-                        rs.getInt("qty_detail"), rs.getDouble("total_detail"), rs.getString("description_detail")));
-                amountSale += rs.getInt("total_detail");
+                if(rs.getString("id_detail").equals(String.valueOf(receipt))) {
+                    observableList.add(new SalesDetail(rs.getString("item_detail"), num++,
+                            rs.getInt("qty_detail"), rs.getDouble("total_detail"), rs.getString("description_detail")));
+                    amountSale += rs.getInt("total_detail");
+                }
             }
 
         }catch (SQLException se){
