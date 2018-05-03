@@ -49,9 +49,9 @@ public class DashboardController {
     }
 
     private double calculatePayment(){
-        double totalPaid = total/100;
-        double totalUnpaid = unpaid/100;
-        return (totalPaid - totalUnpaid);
+        double totalPaid = saleOrderPaid - saleOrderUnpaid;
+
+        return (totalPaid/saleOrderPaid);
     }
 
     public void getSalesTotal(){
