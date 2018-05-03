@@ -1,20 +1,15 @@
 package controller;
 
-import com.sun.tools.javac.util.Name;
-import javafx.beans.property.DoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import program.Database;
-import program.Items;
-import program.Sales;
 import program.SalesDetail;
 
 import java.sql.ResultSet;
