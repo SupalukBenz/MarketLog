@@ -57,7 +57,7 @@
                   <HBox alignment="CENTER_LEFT" />
                   <HBox alignment="CENTER_LEFT" />
                   <HBox alignment="CENTER_LEFT" />
-                  <Button fx:id="itemButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#items" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text="Items" textFill="WHITE">
+                  <Button fx:id="itemsButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#items" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text="Items" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
