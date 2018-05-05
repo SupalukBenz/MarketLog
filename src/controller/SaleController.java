@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,6 +19,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import orm.DatabaseManager;
+import orm.SalesDao;
 import program.*;
 
 import java.io.IOException;
@@ -59,10 +63,13 @@ public class SaleController{
     private static int idDetail;
 
     ObservableList<Sales> observableList = FXCollections.observableArrayList();
-
+    private DatabaseManager db;
+    private SalesDao salesDao = null;
 
     @FXML
     public void initialize() {
+        db = DatabaseManager.getInstance();
+        salesDao = db.getSalesDao();
         readDataToTable();
     }
 
@@ -76,6 +83,9 @@ public class SaleController{
             }
         }catch (SQLException se){
             se.printStackTrace();
+        }
+        for(Sales sales: salesDao){
+            System.out.println(sales.getReceiptId());
         }
 
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -141,6 +151,7 @@ public class SaleController{
         }
         return true;
     }
+
 
 
 

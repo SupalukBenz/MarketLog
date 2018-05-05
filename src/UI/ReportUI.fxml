@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -13,21 +15,21 @@
    <children>
       <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: tran;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab text="Items Report">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #909090;" />
             </content>
           </Tab>
           <Tab text="Sales Report">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #909090;">
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="222.0" text="Sales Report" textFill="WHITE">
+                        <Label layoutX="76.0" layoutY="13.0" prefHeight="51.0" prefWidth="222.0" text="Sales Report" textFill="WHITE">
                            <font>
                               <Font size="27.0" />
                            </font>
                         </Label>
-                        <BarChart fx:id="salesChartMonth" layoutX="58.0" layoutY="85.0" prefHeight="224.0" prefWidth="755.0" title="Sales Year 2018">
+                        <BarChart fx:id="salesChartMonth" layoutX="58.0" layoutY="66.0" prefHeight="258.0" prefWidth="755.0" title="Sales Year 2018">
                           <xAxis>
                             <CategoryAxis fx:id="saleChartMonth_x" side="BOTTOM" />
                           </xAxis>
@@ -35,7 +37,7 @@
                             <NumberAxis fx:id="saleChartMonth_y" side="LEFT" />
                           </yAxis>
                         </BarChart>
-                        <BarChart fx:id="salesChartYear" layoutX="58.0" layoutY="330.0" prefHeight="224.0" prefWidth="755.0" title="Sales, 2017-2027">
+                        <BarChart fx:id="salesChartYear" layoutX="58.0" layoutY="332.0" prefHeight="250.0" prefWidth="755.0" title="Sales, 2017-2027">
                            <xAxis>
                               <CategoryAxis fx:id="saleChartYear_x" side="BOTTOM" />
                            </xAxis>
@@ -43,6 +45,11 @@
                               <NumberAxis fx:id="saleChartYear_y" side="LEFT" />
                            </yAxis>
                         </BarChart>
+                        <ImageView fitHeight="76.0" fitWidth="54.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@photos/sale.png" />
+                           </image>
+                        </ImageView>
                      </children></AnchorPane>
             </content>
           </Tab>

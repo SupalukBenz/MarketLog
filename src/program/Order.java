@@ -1,5 +1,7 @@
 package program;
 
+import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.table.DatabaseTable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,44 +10,47 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@DatabaseTable (tableName = "orders")
 public class Order {
 
-    private final StringProperty item;
-    private final StringProperty description;
-    private final IntegerProperty quantity;
-    private final DoubleProperty total;
-    private final IntegerProperty number;
-
-
+    @DatabaseField
+    private final String item;
+    @DatabaseField
+    private final String description;
+    @DatabaseField
+    private final int quantity;
+    @DatabaseField
+    private final double total;
+    @DatabaseField
+    private final int number;
 
     public Order( String item, String description, int qty, double total, int num){
-        this.item = new SimpleStringProperty(item);
-        this.description = new SimpleStringProperty(description);
-        this.quantity = new SimpleIntegerProperty(qty);
-        this.total = new SimpleDoubleProperty(total);
-        this.number = new SimpleIntegerProperty(num);
+        this.item = item;
+        this.description = description;
+        this.quantity = qty;
+        this.total = total;
+        this.number = num;
     }
 
 
     public String getItem() {
-        return item.get();
+        return item;
     }
 
     public int getQuantity() {
-        return quantity.get();
+        return quantity;
     }
 
     public double getTotal() {
-        return total.get();
+        return total;
     }
 
     public int getNumber() {
-        return number.get();
+        return number;
     }
 
     public String getDescription(){
-        return description.get();
+        return description;
     }
 
     public static double getAmount() {

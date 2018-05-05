@@ -17,20 +17,23 @@ import javafx.collections.ObservableList;
 
 public class Database {
 
-    static final String USER = "benz";
-    static final String PASS = "benz9545";
+    static final String USER = PropertyManager.getProperty("jdbc.user");
+    static final String PASS = PropertyManager.getProperty("jdbc.password");
 
-    static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://127.0.0.1/market_log";
+    static final String JDBC_DRIVER = PropertyManager.getProperty("jdbc.driver");
+    static final String DB_URL = PropertyManager.getProperty("jdbc.url");
 
     static Connection connection = null;
 
 
     public static void connectDatabase(){
         try {
+            Class.forName(JDBC_DRIVER);
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e){
             System.out.println("Cannot try to connect database.");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -107,8 +110,6 @@ public class Database {
         connectDatabase();
 
         try {
-            Class.forName(JDBC_DRIVER);
-
             statement = connection.createStatement();
             String sql = "insert into " + tableName;
             sql += " values(";
@@ -128,7 +129,6 @@ public class Database {
         connectDatabase();
 
         try{
-            Class.forName(JDBC_DRIVER);
             statement = connection.createStatement();
 
             String sql = "delete from " + tableName + " where " + primaryKey + getName(value);
@@ -146,7 +146,6 @@ public class Database {
         connectDatabase();
 
         try{
-            Class.forName(JDBC_DRIVER);
             statement = connection.createStatement();
 
             String sql = "delete from " + tableName;
@@ -164,7 +163,6 @@ public class Database {
         connectDatabase();
 
         try{
-            Class.forName(JDBC_DRIVER);
             statement = connection.createStatement();
             String sql = "UPDATE " + tableName + " SET " + columnEdit + "=" + createStatement(edit) + " where " + columnKey+"="+createStatement(key);
             System.out.println(sql);

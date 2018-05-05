@@ -4,23 +4,23 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import orm.DatabaseManager;
+import orm.ItemsDao;
 import program.ChangePage;
 import program.Database;
 import program.EditValue;
-import program.Items;
+import program.Item;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
 
 public class ItemsController {
@@ -31,50 +31,59 @@ public class ItemsController {
     private TextField search;
 
     @FXML
-    private TableView<Items> itemsTable;
+    private TableView<Item> itemsTable;
 
     @FXML
-    private TableColumn<Items, String> name;
+    private TableColumn<Item, String> name;
 
     @FXML
-    private TableColumn<Items, String> description;
+    private TableColumn<Item, String> description;
 
     @FXML
-    private TableColumn<Items, Integer> quantity;
+    private TableColumn<Item, Integer> quantity;
 
     @FXML
-    private TableColumn<Items, Double> price;
-
-
-    @FXML
-    private TableColumn<Items, String> test;
-
-    ObservableList<Items> observableList = FXCollections.observableArrayList();
-
-    private int num = 1;
+    private TableColumn<Item, Double> price;
 
     @FXML
-    public void initialize() {
+    private TableColumn<Item, String> number;
+
+    @FXML
+    private TableColumn<Item, String> id;
+
+    private int numberTable = 1;
+
+    ObservableList<Item> observableList = FXCollections.observableArrayList();
+
+    private DatabaseManager db;
+    private ItemsDao itemsDao = null;
+
+    @FXML
+    public void initialize() throws SQLException {
+        db = DatabaseManager.getInstance();
+        itemsDao = db.getItemDao();
         readDataToTable();
     }
 
-    public void readDataToTable(){
+
+    public void readDataToTable() throws SQLException{
         ResultSet rs = Database.getAllData("items");
         try {
             while (rs.next()){
-                observableList.add(new Items(rs.getString("name_item"), rs.getString("describe_item"),
-                        rs.getDouble("price_item"), rs.getInt("quantity"), num++));
+                observableList.add(new Item(numberTable++, rs.getInt("id_item"), rs.getString("name_item"), rs.getString("description_item"),
+                        rs.getDouble("total_item"), rs.getInt("quantity_item")));
+
             }
 
         }catch (SQLException se){
             se.printStackTrace();
         }
-
-        name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        quantity.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        test.setCellValueFactory(new PropertyValueFactory<>("test"));
+        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+        id.setCellValueFactory(new PropertyValueFactory<>("id_item"));
+        name.setCellValueFactory(new PropertyValueFactory<>("name_item"));
+        description.setCellValueFactory(new PropertyValueFactory<>("description_item"));
+        price.setCellValueFactory(new PropertyValueFactory<>("total_item"));
+        quantity.setCellValueFactory(new PropertyValueFactory<>("quantity_item"));
 
         itemsTable.setItems(null);
         itemsTable.setItems(observableList);
@@ -99,8 +108,8 @@ public class ItemsController {
                     itemsTable.setItems(observableList);
                     return;
                 }
-                ObservableList<Items> tableData = FXCollections.observableArrayList();
-                ObservableList<TableColumn<Items, ?>> cols = itemsTable.getColumns();
+                ObservableList<Item> tableData = FXCollections.observableArrayList();
+                ObservableList<TableColumn<Item, ?>> cols = itemsTable.getColumns();
 
                 for(int i=0; i<observableList.size(); i++){
 
@@ -122,13 +131,21 @@ public class ItemsController {
     @FXML
     private void handleDeleteItem(){
         if(checkClickTable(itemsTable)) {
-            ObservableList<Items> itemsSelected, allItems;
+            ObservableList<Item> itemsSelected, allItems;
             allItems = itemsTable.getItems();
             itemsSelected = itemsTable.getSelectionModel().getSelectedItems();
-            System.out.println(itemsSelected.get(0).getName());
-            Database.deleteData("items", "name_item", itemsSelected.get(0).getName());
+            System.out.println("id item delete " + itemsSelected.get(0).getId_item());
+//            Database.deleteData("items", "name_item", itemsSelected.get(0).getName());
+            try {
+                //delete from database.
+                itemsDao.deleteById(itemsSelected.get(0).getId_item());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            //delete from tableView.
             itemsSelected.forEach(allItems::remove);
         }
+        ChangePage.changeUI("UI/ItemsUI.fxml", pane);
 
     }
 
@@ -146,8 +163,8 @@ public class ItemsController {
     @FXML
     private void handleUpdateItem(){
         if(checkClickTable(itemsTable)) {
-            ObservableList<Items> itemForAdd = itemsTable.getSelectionModel().getSelectedItems();
-            String item = itemForAdd.get(0).getName();
+            List<Item> itemForAdd = itemsTable.getSelectionModel().getSelectedItems();
+            String item = itemForAdd.get(0).getName_item();
             inputDialog(item);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Added stock");
@@ -182,7 +199,16 @@ public class ItemsController {
     }
 
     private void addStock(int result, String item){
-        EditValue.updateStock(item, result);
+//        EditValue.updateStock(item, result);
+        List<Item> itemUpdateList = itemsDao.searchByColumnName("name_item", item);
+        Item itemUpdate = itemUpdateList.get(0);
+        System.out.println("update :" + itemUpdate.getId_item());
+        int newqty = itemUpdate.getQuantity_item() + result;
+        try {
+            itemsDao.update(new Item(itemUpdate.getId_item(), itemUpdate.getName_item(), itemUpdate.getDescription_item(), itemUpdate.getTotal_item(), newqty));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

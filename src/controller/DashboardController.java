@@ -79,7 +79,7 @@ public class DashboardController {
         ResultSet rs = Database.getAllData("items");
         try {
             while(rs.next()){
-                if(rs.getInt("quantity") == 0){
+                if(rs.getInt("quantity_item") == 0){
                     stockItemZero++;
                 }else {
                     stockItem++;

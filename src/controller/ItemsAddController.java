@@ -5,8 +5,13 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import orm.DatabaseManager;
+import orm.ItemsDao;
 import program.ChangePage;
 import program.Database;
+import program.Item;
+
+import java.sql.SQLException;
 
 
 public class ItemsAddController {
@@ -73,16 +78,23 @@ public class ItemsAddController {
 
 
 
-    private void addToDatabase(){
+    private void addToDatabase() {
 
         nameItem = nameAdd.getText();
         descriptionItem = descriptionAdd.getText();
         qtyItem = Integer.parseInt(qtyAdd.getText());
         priceItem = Double.parseDouble(priceAdd.getText());
 
-        Database.insertData("items", nameItem, descriptionItem, priceItem, qtyItem);
-
-
+//        Database.insertData("items", nameItem, descriptionItem, qtyItem, priceItem);
+        DatabaseManager databaseManager = DatabaseManager.getInstance();
+        ItemsDao itemsDao = databaseManager.getItemDao();
+        System.out.println("id previous : " + itemsDao.getLastIdItem(itemsDao));
+        Item item = new Item(nameItem, descriptionItem, priceItem, qtyItem);
+        try {
+            itemsDao.create(item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

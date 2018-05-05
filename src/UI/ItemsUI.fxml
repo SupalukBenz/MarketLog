@@ -24,11 +24,12 @@
       </ImageView>
       <TableView fx:id="itemsTable" layoutX="13.0" layoutY="186.0" prefHeight="358.0" prefWidth="836.0">
         <columns>
-            <TableColumn fx:id="test" prefWidth="60.0" text="No" />
+            <TableColumn fx:id="number" prefWidth="45.0" text="No." />
+            <TableColumn fx:id="id" prefWidth="64.0" text="ID" />
           <TableColumn fx:id="name" prefWidth="398.0" text="Item name" />
             <TableColumn fx:id="description" prefWidth="162.0" text="Description" />
-            <TableColumn fx:id="quantity" prefWidth="82.0" text="Qty" />
-            <TableColumn fx:id="price" prefWidth="133.0" text="Price" />
+            <TableColumn fx:id="quantity" prefWidth="77.95513916015625" text="Qty" />
+            <TableColumn fx:id="price" prefWidth="87.4395751953125" text="Price" />
         </columns>
       </TableView>
       <Button fx:id="addButton" layoutX="644.0" layoutY="104.0" mnemonicParsing="false" onAction="#handleAddItem" prefHeight="53.0" prefWidth="169.0" style="-fx-background-color: #1f7a7a; -fx-background-radius: 70;" text="Add Item" textFill="WHITE">
