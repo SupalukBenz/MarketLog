@@ -61,24 +61,6 @@ public class Item {
         this.id_item = id_item;
     }
 
-    public String getName() {
-        return name_item;
-    }
-
-    public String getDescription() {
-        return description_item;
-    }
-
-
-    public double getPrice() {
-        return total_item;
-    }
-
-
-    public int getQty() {
-        return quantity_item;
-    }
-
     public int getNumber(){ return number; }
 
     public String getName_item() {

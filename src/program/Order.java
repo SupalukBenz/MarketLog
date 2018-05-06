@@ -14,15 +14,15 @@ import java.util.List;
 public class Order {
 
     @DatabaseField
-    private final String item;
+    private String item;
     @DatabaseField
-    private final String description;
+    private String description;
     @DatabaseField
-    private final int quantity;
+    private int quantity;
     @DatabaseField
-    private final double total;
+    private double total;
     @DatabaseField
-    private final int number;
+    private int number;
 
     public Order( String item, String description, int qty, double total, int num){
         this.item = item;
@@ -32,6 +32,9 @@ public class Order {
         this.number = num;
     }
 
+    public Order(){
+
+    }
 
     public String getItem() {
         return item;

@@ -35,4 +35,9 @@ public class ItemsDao extends BaseDaoImpl<Item, Integer> {
         return lastId;
     }
 
+    public Item getItemFromKey(String tableColumn, String key){
+        List<Item> getItem = searchByColumnName(tableColumn, key);
+        return getItem.get(0);
+    }
+
 }

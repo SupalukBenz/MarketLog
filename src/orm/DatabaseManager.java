@@ -3,7 +3,6 @@ package orm;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import program.Item;
 import program.PropertyManager;
 
 import java.sql.SQLException;
@@ -14,6 +13,7 @@ public class DatabaseManager {
     private ItemsDao itemsDao = null;
     private SalesDao salesDao = null;
     private OrderDao orderDao = null;
+    private SaleDetailDao saleDetailDao = null;
 
     public DatabaseManager(){
         String username = PropertyManager.getProperty("jdbc.user", "");
@@ -66,5 +66,15 @@ public class DatabaseManager {
         return orderDao;
     }
 
+    public SaleDetailDao getSaleDetailDao(){
+        if(saleDetailDao == null){
+            try {
+                saleDetailDao = new SaleDetailDao(connection);
+            } catch (SQLException se){
+                System.out.println("Cannot connect to SaleDetailDao.");
+            }
+        }
+        return saleDetailDao;
+    }
 
 }

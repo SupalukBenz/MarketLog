@@ -78,6 +78,10 @@ public class ItemsController {
         }catch (SQLException se){
             se.printStackTrace();
         }
+
+//        for(Item item: itemsDao){
+//            observableList.add(item);
+//        }
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         id.setCellValueFactory(new PropertyValueFactory<>("id_item"));
         name.setCellValueFactory(new PropertyValueFactory<>("name_item"));
@@ -200,8 +204,7 @@ public class ItemsController {
 
     private void addStock(int result, String item){
 //        EditValue.updateStock(item, result);
-        List<Item> itemUpdateList = itemsDao.searchByColumnName("name_item", item);
-        Item itemUpdate = itemUpdateList.get(0);
+        Item itemUpdate = itemsDao.getItemFromKey("name_item", item);
         System.out.println("update :" + itemUpdate.getId_item());
         int newqty = itemUpdate.getQuantity_item() + result;
         try {

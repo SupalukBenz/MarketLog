@@ -42,6 +42,10 @@ public class Sales {
         this.status_sale = status;
     }
 
+    public Sales(){
+
+    }
+
 
     public String getDate(){
         return date_sale;
