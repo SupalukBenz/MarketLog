@@ -2,7 +2,6 @@ package orm;
 
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
-import com.j256.ormlite.table.TableUtils;
 import program.PropertyManager;
 
 import java.sql.SQLException;

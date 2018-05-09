@@ -16,7 +16,7 @@ public class HomePageController {
 
 
     @FXML
-    private Button dashboardButton, reportButton, itemsButton, saleButton, calendarButton, helpButton;
+    private Button dashboardButton, chartButton, itemsButton, saleButton, calendarButton, helpButton;
 
     @FXML
     public void initialize(){
@@ -39,10 +39,10 @@ public class HomePageController {
     }
 
     @FXML
-    private void report(ActionEvent e){
+    private void chart(ActionEvent e){
         initializeColorBotton();
-        changeColorButton(reportButton);
-        ChangePage.loadUI("ReportUI", pane, HomePageController.class);
+        changeColorButton(chartButton);
+        ChangePage.loadUI("ChartUI", pane, HomePageController.class);
     }
 
     @FXML
@@ -66,7 +66,7 @@ public class HomePageController {
 
     private void initializeColorBotton(){
         dashboardButton.setStyle("-fx-background-color:  #2d5986");
-        reportButton.setStyle("-fx-background-color:  #2d5986");
+        chartButton.setStyle("-fx-background-color:  #2d5986");
         saleButton.setStyle("-fx-background-color:  #2d5986");
         itemsButton.setStyle("-fx-background-color:  #2d5986");
         helpButton.setStyle("-fx-background-color:  #2d5986");

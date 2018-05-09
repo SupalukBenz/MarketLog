@@ -40,7 +40,7 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#report" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text="Report" textFill="WHITE">
+                  <Button fx:id="chartButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#chart" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text="Sales Chart" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
