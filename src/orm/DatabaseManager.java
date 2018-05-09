@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
     private static DatabaseManager instance;
-    private static ConnectionSource connection;
+    private ConnectionSource connection;
     private ItemsDao itemsDao = null;
     private SalesDao salesDao = null;
     private OrderDao orderDao = null;
