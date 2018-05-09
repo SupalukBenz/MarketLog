@@ -27,6 +27,19 @@ public class SalesDao extends BaseDaoImpl<Sales, Integer> {
         return saleList;
     }
 
+    public List<Sales> searchByReceiptId(int receiptId){
+        QueryBuilder<Sales, Integer> qb = this. queryBuilder();
+        List<Sales> saleList = null;
+
+        try {
+            saleList = qb.where().eq("receipt_id", receiptId).query();
+        } catch (SQLException se){
+            System.out.println("Cannot search in sales data.");
+        }
+
+        return saleList;
+    }
+
     public Sales getSaleFromKey(String tableName, String search){
         List<Sales> getSale = searchByColumnName(tableName, search);
         return getSale.get(0);

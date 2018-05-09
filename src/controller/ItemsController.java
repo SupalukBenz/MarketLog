@@ -51,7 +51,7 @@ public class ItemsController {
     @FXML
     private TableColumn<Item, String> id;
 
-    private int numberTable = 1;
+    private int numberTable = 0;
 
     ObservableList<Item> observableList = FXCollections.observableArrayList();
 
@@ -67,21 +67,11 @@ public class ItemsController {
 
 
     public void readDataToTable() throws SQLException{
-        ResultSet rs = Database.getAllData("items");
-        try {
-            while (rs.next()){
-                observableList.add(new Item(numberTable++, rs.getInt("id_item"), rs.getString("name_item"), rs.getString("description_item"),
-                        rs.getDouble("total_item"), rs.getInt("quantity_item")));
-
-            }
-
-        }catch (SQLException se){
-            se.printStackTrace();
+        for(Item item: itemsDao){
+            numberTable++;
+            item.setNumber(numberTable);
+            observableList.add(item);
         }
-
-//        for(Item item: itemsDao){
-//            observableList.add(item);
-//        }
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         id.setCellValueFactory(new PropertyValueFactory<>("id_item"));
         name.setCellValueFactory(new PropertyValueFactory<>("name_item"));

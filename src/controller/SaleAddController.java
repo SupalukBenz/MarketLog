@@ -248,7 +248,7 @@ public class SaleAddController {
     private void handleSubmitButton(ActionEvent event){
         double amountOfOrder = orderDao.getAmountOfOrder(orderDao);
         double vatOfAmount = (amountOfOrder*10)/100;
-        double totalOrder = amountOfOrder + vatOfAmount;
+        double totalOrder = Math.round(amountOfOrder + vatOfAmount);
 
         amount.setText(String.valueOf(amountOfOrder));
         vat.setText(String.valueOf(vatOfAmount));
@@ -279,11 +279,9 @@ public class SaleAddController {
             }
 
             if(statusAdd.equals("paid")){
-//                EditValue.inventoryUpdate(orderList);
                 for(Order order: orderDao) {
                     System.out.println("order name = " + order.getItem());
                     saleDetailDao.updateQuantityItem(itemsDao, order.getItem(), order.getQuantity());
-
                 }
             }
 
@@ -301,19 +299,6 @@ public class SaleAddController {
 
 
     private void addDetailItems(int receipt) {
-
-//        ObservableList item = Database.selectItem("orders", "item_order");
-//        ObservableList descrip = Database.selectItem("orders", "description_order");
-//        ObservableList qty = Database.selectItem("orders", "qty_order");
-//        ObservableList total = Database.selectItem("orders", "total_order");
-//        int q = 0;
-//
-//        for (Object i : item) {
-//
-//            Database.insertData("sale_id_details", getNumberDetail(), receipt, item.get(q), descrip.get(q), qty.get(q), total.get(q));
-//            qtySales += Integer.parseInt((String) qty.get(q));
-//            q++;
-//        }
         for(Order order: orderDao){
             SaleDetail saleDetail = new SaleDetail(getNumberDetail(), receipt, order.getItem(), order.getDescription(), order.getQuantity(), order.getTotal());
             try {

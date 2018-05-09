@@ -61,6 +61,10 @@ public class Item {
         this.id_item = id_item;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public int getNumber(){ return number; }
 
     public String getName_item() {

@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SaleDetailController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="582.0" layoutX="14.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="573.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
       <Label fx:id="receiptId" alignment="CENTER" layoutX="183.0" layoutY="42.0" prefHeight="52.0" prefWidth="235.0" text="Label" textAlignment="CENTER">
@@ -118,7 +118,7 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="33.0" layoutY="542.0" mnemonicParsing="false" onAction="#handleSaveToPDF" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #888888; -fx-background-radius: 50;" text="Save PDF" textFill="WHITE">
+      <Button layoutX="43.0" layoutY="522.0" mnemonicParsing="false" onAction="#handleSaveToPDF" prefHeight="31.0" prefWidth="109.0" style="-fx-background-color: #888888; -fx-background-radius: 50;" text="Save PDF" textFill="WHITE">
          <graphic>
             <ImageView fitHeight="19.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                <image>

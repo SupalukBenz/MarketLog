@@ -9,11 +9,17 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import orm.DatabaseManager;
+import orm.SaleDetailDao;
+import orm.SalesDao;
 import program.Database;
-import program.SalesDetail;
+import program.Report;
+import program.SaleDetail;
+import program.Sales;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class SaleDetailController {
@@ -27,58 +33,72 @@ public class SaleDetailController {
     private Label companyName, status, quantity, amount, vat, total, date;
 
     @FXML
-    private TableView<SalesDetail> detailTable;
+    private TableView<SaleDetail> detailTable;
 
     @FXML
-    private TableColumn<SalesDetail, Integer> numberTable;
+    private TableColumn<SaleDetail, Integer> numberTable;
 
     @FXML
-    private TableColumn<SalesDetail, String> itemNameTable;
+    private TableColumn<SaleDetail, String> itemNameTable;
 
     @FXML
-    private TableColumn<SalesDetail, Integer> qtyTable;
+    private TableColumn<SaleDetail, Integer> qtyTable;
 
     @FXML
-    private TableColumn<SalesDetail, String> descriptionTable;
+    private TableColumn<SaleDetail, String> descriptionTable;
 
     @FXML
-    private TableColumn<SalesDetail, Double> totalTable;
+    private TableColumn<SaleDetail, Double> totalTable;
 
+    private DatabaseManager db;
+    private SaleDetailDao salesDetail = null;
+    private SalesDao sales = null;
+
+    private String companySale = "";
+    private String dateSale = "";
+    private int qtySale = 0;
+    private double totalSale = 0;
+    private String statusSale = "";
     private int receipt;
-    private ObservableList<SalesDetail> observableList = FXCollections.observableArrayList();
+    private ObservableList<SaleDetail> observableList = FXCollections.observableArrayList();
     private int num = 1;
     private double amountSale = 0;
 
     @FXML
     private void initialize(){
+        db = DatabaseManager.getInstance();
+        salesDetail = db.getSaleDetailDao();
+        sales = db.getSalesDao();
+
         receipt = SaleController.getIdDetail();
         receiptId.setText(String.valueOf(receipt));
         readDataToTable();
         setDetail();
     }
 
+    @FXML
+    private void handleSaveToPDF(){
+        Report.salesDetailToPDF(salesDetail, receipt, companySale, statusSale, amountSale, Double.parseDouble(vat.getText()));
+    }
+
     private void readDataToTable(){
-        ResultSet rs = Database.getAllData("sale_id_details");
         amountSale = 0;
+        int number = 0;
 
-        try {
-            while (rs.next()){
-                if(rs.getString("id_detail").equals(String.valueOf(receipt))) {
-                    observableList.add(new SalesDetail(rs.getString("item_detail"), num++,
-                            rs.getInt("qty_detail"), rs.getDouble("total_detail"), rs.getString("description_detail")));
-                    amountSale += rs.getInt("total_detail");
-                }
+        for(SaleDetail saleDetail: salesDetail){
+            if(saleDetail.getId_detail() == receipt){
+                number++;
+                saleDetail.setNumber_detail(number);
+                observableList.add(saleDetail);
+                amountSale += saleDetail.getTotal_detail();
             }
-
-        }catch (SQLException se){
-            se.printStackTrace();
         }
 
-        numberTable.setCellValueFactory(new PropertyValueFactory<>("number"));
-        itemNameTable.setCellValueFactory(new PropertyValueFactory<>("item"));
-        descriptionTable.setCellValueFactory(new PropertyValueFactory<>("description"));
-        qtyTable.setCellValueFactory(new PropertyValueFactory<>("qty"));
-        totalTable.setCellValueFactory(new PropertyValueFactory<>("total"));
+        numberTable.setCellValueFactory(new PropertyValueFactory<>("number_detail"));
+        itemNameTable.setCellValueFactory(new PropertyValueFactory<>("item_detail"));
+        descriptionTable.setCellValueFactory(new PropertyValueFactory<>("description_detail"));
+        qtyTable.setCellValueFactory(new PropertyValueFactory<>("qty_detail"));
+        totalTable.setCellValueFactory(new PropertyValueFactory<>("total_detail"));
 
         detailTable.setItems(null);
         detailTable.setItems(observableList);
@@ -86,38 +106,28 @@ public class SaleDetailController {
 
     private void setDetail(){
 
-        ResultSet rs = Database.getAllData("sales");
-        String companySale = "";
-        String dateSale = "";
-        int qtySale = 0;
-        double totalSale = 0;
-        String statusSale = "";
-        try {
-            while (rs.next()){
-                if(rs.getInt("receipt_id") == receipt){
-                    companySale = rs.getString("company");
-                    dateSale = rs.getString("date_sale");
-                    totalSale = rs.getDouble("total_sale");
-                    qtySale = rs.getInt("qty_sale");
-                    statusSale = rs.getString("status_sale");
-                }
-
-            }
-
-        }catch (SQLException se){
-            se.printStackTrace();
-        }
-
+        List<Sales> salesList = sales.searchByReceiptId(receipt);
+        Sales saleFromId = salesList.get(0);
+        companySale = saleFromId.getCompany();
         companyName.setText(companySale);
+
+        dateSale = saleFromId.getDate();
         date.setText(dateSale);
+
+        qtySale = saleFromId.getQuantity();
         quantity.setText(String.valueOf(qtySale));
+
+        totalSale = saleFromId.getTotal();
         total.setText(String.valueOf(totalSale));
+
+        statusSale = saleFromId.getStatus();
         status.setText(statusSale);
+
         amount.setText(String.valueOf(amountSale));
         double vatSale = ((amountSale*10)/100);
         vat.setText(String.valueOf(vatSale));
 
-        if(statusSale.equals("unpaid")){
+        if(status.getText().equals("unpaid")){
             status.setTextFill(Color.RED);
         }
 

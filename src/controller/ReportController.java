@@ -5,7 +5,6 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.layout.AnchorPane;
 import program.Database;
-import program.SalesDetail;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

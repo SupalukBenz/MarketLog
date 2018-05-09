@@ -6,6 +6,7 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "sale_id_details")
 public class SaleDetail {
 
+
     @DatabaseField(id = true)
     private int number_detail;
     @DatabaseField
@@ -61,5 +62,9 @@ public class SaleDetail {
 
     public double getTotal_detail() {
         return total_detail;
+    }
+
+    public void setNumber_detail(int number_detail) {
+        this.number_detail = number_detail;
     }
 }

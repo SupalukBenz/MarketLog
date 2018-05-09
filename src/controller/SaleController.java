@@ -74,16 +74,7 @@ public class SaleController{
     }
 
     public void readDataToTable(){
-//        ResultSet rs = Database.getAllData("sales");
-//        int num = 0;
-//        try {
-//            while (rs.next()){
-//                observableList.add(new Sales(rs.getString("date_sale"), rs.getInt("receipt_id"), rs.getString("company"),
-//                        rs.getInt("qty_sale"), rs.getDouble("total_sale"), rs.getString("status_sale")));
-//            }
-//        }catch (SQLException se){
-//            se.printStackTrace();
-//        }
+
         for(Sales sales: salesDao){
             observableList.add(sales);
         }
@@ -134,6 +125,11 @@ public class SaleController{
                 e.printStackTrace();
             }
         }
+    }
+
+    @FXML
+    public void handleSavePDFSales(){
+        Report.salesToPdf(salesDao);
     }
 
     public static int getIdDetail(){
