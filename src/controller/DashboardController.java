@@ -5,7 +5,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import orm.DatabaseManager;
+import orm.ItemsDao;
+import orm.SalesDao;
 import program.Database;
+import program.Item;
+import program.Sales;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,6 +26,10 @@ public class DashboardController {
     @FXML
     private ProgressIndicator totalPayment;
 
+    private DatabaseManager db;
+    private SalesDao salesDao = null;
+    private ItemsDao itemsDao = null;
+
     private double total = 0;
     private int stockItem = 0;
     private int stockItemZero = 0;
@@ -32,6 +41,10 @@ public class DashboardController {
 
     @FXML
     public void initialize() {
+        db = DatabaseManager.getInstance();
+        salesDao = db.getSalesDao();
+        itemsDao = db.getItemDao();
+
         getItemsTotal();
         getSalesTotal();
         saleAmount.setText(String.valueOf(total));
@@ -55,39 +68,25 @@ public class DashboardController {
     }
 
     public void getSalesTotal(){
-        ResultSet rs = Database.getAllData("sales");
 
-        try {
-            while(rs.next()){
-                if(rs.getString("status_sale").equals("paid")) {
-                    saleOrderPaid++;
-                    total += rs.getDouble("total_sale");
-                }
-                if(rs.getString("status_sale").equals("unpaid")) {
-                    saleOrderUnpaid++;
-                    unpaid += rs.getDouble("total_sale");
-
-                }
-                saleOrder++;
+        for(Sales sales: salesDao){
+            if(sales.getStatus().equals("paid")){
+                saleOrderPaid++;
+                total += sales.getTotal();
             }
-        } catch (SQLException se){
-            se.printStackTrace();
+            if(sales.getStatus().equals("unpaid")){
+                saleOrderUnpaid++;
+                unpaid += sales.getTotal();
+            }
+            saleOrder++;
         }
     }
 
     public void getItemsTotal(){
-        ResultSet rs = Database.getAllData("items");
-        try {
-            while(rs.next()){
-                if(rs.getInt("quantity_item") == 0){
-                    stockItemZero++;
-                }else {
-                    stockItem++;
+        for(Item item: itemsDao){
+            if(item.getQuantity_item() == 0) stockItemZero++;
+            else stockItem++;
 
-                }
-            }
-        } catch (SQLException se){
-            se.printStackTrace();
         }
     }
 }
