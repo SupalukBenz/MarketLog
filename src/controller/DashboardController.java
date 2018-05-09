@@ -8,13 +8,8 @@ import javafx.scene.paint.Color;
 import orm.DatabaseManager;
 import orm.ItemsDao;
 import orm.SalesDao;
-import program.Database;
 import program.Item;
 import program.Sales;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
 
 public class DashboardController {
     @FXML

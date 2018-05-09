@@ -53,7 +53,7 @@
                         </Text>
                         <Text fill="#8cd98c" layoutX="42.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paid" wrappingWidth="55.19873046875">
                            <font>
-                              <Font size="21.0" />
+                              <Font size="22.0" />
                            </font>
                         </Text>
                         <Label fx:id="paidOrder" alignment="TOP_CENTER" layoutX="98.0" layoutY="94.0" prefHeight="32.0" prefWidth="109.0" text="0" textFill="WHITE">
