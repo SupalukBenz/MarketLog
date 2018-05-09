@@ -12,10 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import orm.DatabaseManager;
 import orm.ItemsDao;
-import program.ChangePage;
-import program.Database;
-import program.EditValue;
-import program.Item;
+import program.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -170,6 +167,11 @@ public class ItemsController {
             ChangePage.changeUI("UI/ItemsUI.fxml", pane);
         }
 
+    }
+
+    @FXML
+    private void handleSavePDF(){
+        Report.saveItemsToPDF(itemsDao);
     }
 
     private void inputDialog(String item){

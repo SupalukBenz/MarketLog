@@ -73,5 +73,17 @@
             <Font size="17.0" />
          </font>
       </TextField>
+      <Button layoutX="663.0" layoutY="564.0" mnemonicParsing="false" onAction="#handleSavePDF" prefHeight="42.0" prefWidth="179.0" style="-fx-background-color: #FFFFFF; -fx-border-radius: 10;" text="Save PDF">
+         <font>
+            <Font size="20.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@photos/download.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>
