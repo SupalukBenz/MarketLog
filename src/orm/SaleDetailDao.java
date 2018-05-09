@@ -27,10 +27,7 @@ public class SaleDetailDao extends BaseDaoImpl<SaleDetail, Integer> {
         return saleList;
     }
 
-    public void updateQuantityItem(String itemName, int orderQty){
-        DatabaseManager db = DatabaseManager.getInstance();
-        ItemsDao itemsDao = db.getItemDao();
-
+    public void updateQuantityItem(ItemsDao itemsDao, String itemName, int orderQty){
         Item item = itemsDao.getItemFromKey("name_item", itemName);
         int result = item.getQuantity_item() - orderQty;
         Item update = new Item(item.getId_item(), item.getName_item(), item.getDescription_item(), item.getTotal_item(), result);

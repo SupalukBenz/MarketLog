@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import orm.*;
 import program.*;
 
 import java.sql.ResultSet;
@@ -67,17 +68,31 @@ public class SaleAddController {
 
     private int qtySales = 0;
 
-    private int num = 1;
+    private int number = 1;
+
+    private DatabaseManager db;
+    private SalesDao salesDao = null;
+    private SaleDetailDao saleDetailDao = null;
+    private OrderDao orderDao = null;
+    private ItemsDao itemsDao = null;
 
     @FXML
     public void initialize() {
+        db = DatabaseManager.getInstance();
+        salesDao = db.getSalesDao();
+        saleDetailDao = db.getSaleDetailDao();
+        itemsDao = db.getItemDao();
+        orderDao = db.getOrderDao();
         addListToTable();
         orderToTable();
     }
 
     private void addListToTable(){
-        ObservableList observableList = Database.selectItem("items", "name_item");
-        listOfItem.getItems().addAll(observableList);
+        List<String> items = new ArrayList<>();
+        for(Item item: itemsDao){
+            items.add(item.getName_item());
+        }
+        listOfItem.getItems().addAll(items);
         listOfItem.getSelectionModel().select(0);
         handleSelectItem();
     }
@@ -103,9 +118,8 @@ public class SaleAddController {
     }
 
     private void showDescription(String value){
-        ObservableList describe = Database.searchFromKey("items", "name_item", value, "describe_item");
-        String result = describe.get(0).toString();
-        descriptionShow.setText(result);
+        Item item = itemsDao.getItemFromKey("name_item", value);
+        descriptionShow.setText(item.getDescription_item());
     }
 
     private boolean checkInteger(){
@@ -125,19 +139,11 @@ public class SaleAddController {
 
     private void orderToTable(){
 
-        rs = Database.getAllData("orders");
-
-        try {
-            while (rs.next()){
-                orderList.add(new Order(rs.getString("item_order"), rs.getString("description_order"), rs.getInt("qty_order"),
-                        rs.getDouble("total_order"), num++));
-            }
-            System.out.println("size = "+ orderList.size());
-
-        } catch (SQLException se){
-            se.printStackTrace();
-            System.out.println("Cannot add order to table");
+        for(Order order: orderDao){
+            orderList.add(order);
+            order.setNumber(number++);
         }
+
         numberTable.setCellValueFactory(new PropertyValueFactory<>("number"));
         itemTable.setCellValueFactory(new PropertyValueFactory<>("item"));
         descripTable.setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -154,8 +160,9 @@ public class SaleAddController {
         if(checkInteger() && isCheckForAdd()){
             String item = listOfItem.getValue().toString();
             checkQtyStock();
-            ObservableList tot = Database.searchFromKey("items", "name_item", item, "price_item");
-            double result = Double.parseDouble(tot.get(0).toString());
+//            ObservableList tot = Database.searchFromKey("items", "name_item", item, "price_item");
+            Item itemFromKey = itemsDao.getItemFromKey("name_item", item);
+            double result = itemFromKey.getTotal_item();
             int qty = Integer.parseInt(qtyAdd.getText());
             totalFromQty.setText(String.valueOf(qty*result));
         }else {
@@ -190,11 +197,17 @@ public class SaleAddController {
             }
 
             if(check){
-                EditValue.editingQtyOfOrders(item, qty);
-                EditValue.editingTotalOfOrders(item, totalItem);
-
+                System.out.println("check");
+                orderDao.editedOrder(orderDao, item, qty, totalItem);
             }else {
-                Database.insertData("orders",  item, description, qty, totalItem);
+                System.out.println("insert");
+                Order addOrder = new Order(item, description, qty, totalItem);
+                try {
+                    orderDao.create(addOrder);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+//                Database.insertData("orders",  item, description, qty, totalItem);
             }
 
             ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
@@ -216,12 +229,16 @@ public class SaleAddController {
     @FXML
     private void handleDeleteButton(ActionEvent event){
         try {
-
             ObservableList<Order> orderSelected, allOrder;
             allOrder = orderTable.getItems();
             orderSelected = orderTable.getSelectionModel().getSelectedItems();
-            Database.deleteData("orders", "item_order", orderSelected.get(0).getItem());
+            try {
+                orderDao.deleteById( orderSelected.get(0).getItem());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             orderSelected.forEach(allOrder::remove);
+            ChangePage.changeUI("UI/SaleOrderUI.fxml", pane);
         }catch (NullPointerException ex){
             System.out.println("No select data from table.");
         }
@@ -229,14 +246,20 @@ public class SaleAddController {
 
     @FXML
     private void handleSubmitButton(ActionEvent event){
-        amount.setText(String.valueOf(Order.getAmount()));
-        vat.setText(String.valueOf(Order.sumVat()));
-        total.setText(String.valueOf(Order.allTotal()));
+        double amountOfOrder = orderDao.getAmountOfOrder(orderDao);
+        double vatOfAmount = (amountOfOrder*10)/100;
+        double totalOrder = amountOfOrder + vatOfAmount;
+
+        amount.setText(String.valueOf(amountOfOrder));
+        vat.setText(String.valueOf(vatOfAmount));
+        total.setText(String.valueOf(totalOrder));
         qtyAdd.setEditable(false);
 
         status.getItems().addAll("paid", "unpaid");
         status.getSelectionModel().select(0);
     }
+
+
 
     @FXML
     private void handleSaveOrder(ActionEvent event){
@@ -246,10 +269,24 @@ public class SaleAddController {
             String dateOrder = date.toString();
             int receiptId = getReceiptId();
             addDetailItems(receiptId);
-            Database.insertData("sales", dateOrder, receiptId, company,  qtySales , Double.parseDouble(total.getText()), statusAdd);
-            if(statusAdd.equals("paid")){
-                EditValue.inventoryUpdate(orderList);
+            Sales addSale = new Sales(dateOrder, receiptId, company, qtySales, Double.parseDouble(total.getText()), statusAdd);
+            System.out.println("addSale id = " + receiptId);
+            try {
+                salesDao.create(addSale);
+                System.out.println("saleDao ? : " + salesDao.searchByColumnName("receipt_id", "10005"));
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
+            if(statusAdd.equals("paid")){
+//                EditValue.inventoryUpdate(orderList);
+                for(Order order: orderDao) {
+                    System.out.println("order name = " + order.getItem());
+                    saleDetailDao.updateQuantityItem(itemsDao, order.getItem(), order.getQuantity());
+
+                }
+            }
+
             Database.deleteAllData("orders");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Added Order");
@@ -262,22 +299,34 @@ public class SaleAddController {
 
     }
 
+
     private void addDetailItems(int receipt) {
-        ObservableList item = Database.selectItem("orders", "item_order");
-        ObservableList descrip = Database.selectItem("orders", "description_order");
-        ObservableList qty = Database.selectItem("orders", "qty_order");
-        ObservableList total = Database.selectItem("orders", "total_order");
-        int q = 0;
-        for (Object i : item) {
-            Database.insertData("sale_id_details", getNumberDetail(), receipt, item.get(q), descrip.get(q), qty.get(q), total.get(q));
-            qtySales += Integer.parseInt((String) qty.get(q));
-            q++;
+
+//        ObservableList item = Database.selectItem("orders", "item_order");
+//        ObservableList descrip = Database.selectItem("orders", "description_order");
+//        ObservableList qty = Database.selectItem("orders", "qty_order");
+//        ObservableList total = Database.selectItem("orders", "total_order");
+//        int q = 0;
+//
+//        for (Object i : item) {
+//
+//            Database.insertData("sale_id_details", getNumberDetail(), receipt, item.get(q), descrip.get(q), qty.get(q), total.get(q));
+//            qtySales += Integer.parseInt((String) qty.get(q));
+//            q++;
+//        }
+        for(Order order: orderDao){
+            SaleDetail saleDetail = new SaleDetail(getNumberDetail(), receipt, order.getItem(), order.getDescription(), order.getQuantity(), order.getTotal());
+            try {
+                saleDetailDao.create(saleDetail);
+                qtySales+=order.getQuantity();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     private int getNumberDetail(){
         ObservableList id = Database.selectItem("sale_id_details", "number_detail");
-
         if(id == null || id.isEmpty()){
             return 1;
         }else{
@@ -295,8 +344,8 @@ public class SaleAddController {
     }
 
     private void checkQtyStock(){
-        ObservableList qtyStockList = Database.searchFromKey("items", "name_item", get, "quantity");
-        int qtyStock = Integer.parseInt(qtyStockList.get(0).toString());
+        Item itemCheck = itemsDao.getItemFromKey("name_item", get);
+        int qtyStock = itemCheck.getQuantity_item();
         int qtyCheck = Integer.parseInt(qtyAdd.getText());
         if((qtyStock - qtyCheck) <= 0) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -311,7 +360,6 @@ public class SaleAddController {
 
     private int getReceiptId(){
         ObservableList id = Database.selectItem("sales", "receipt_id");
-
         if(id == null || id.isEmpty()){
             return 10001;
         }else{

@@ -59,12 +59,14 @@ public class SaleUpdateController {
     private DatabaseManager db;
     private SalesDao salesDao = null;
     private SaleDetailDao saleDetailDao = null;
+    private ItemsDao itemsDao = null;
 
     @FXML
     private void initialize(){
         db = DatabaseManager.getInstance();
         salesDao = db.getSalesDao();
         saleDetailDao = db.getSaleDetailDao();
+        itemsDao = db.getItemDao();
         readDataToTable();
     }
 
@@ -83,17 +85,9 @@ public class SaleUpdateController {
     }
 
     private void listOfItem(int id){
-//        ObservableList getItemId = Database.searchFromKeyId("sale_id_details", "id_detail", id, "item_detail");
-//        ObservableList getQtyId = Database.searchFromKeyId("sale_id_details", "id_detail", id, "qty_detail");
-//        for(int i=0; i<=getItemId.size()-1; i++){
-//            System.out.println("getItemID : " + getItemId.get(i).toString());
-//            System.out.println("getQty : " + Integer.parseInt(getQtyId.get(i).toString()));
-////            EditValue.editingQtyOfItems(getItemId.get(i).toString(),Integer.parseInt(getQtyId.get(i).toString()));
-//
-//        }
         List<SaleDetail> getIdDetail = saleDetailDao.searchByColumnName("id_detail", id);
         for(SaleDetail saleDetail : getIdDetail){
-            saleDetailDao.updateQuantityItem(saleDetail.getItem_detail(), saleDetail.getQty_detail());
+            saleDetailDao.updateQuantityItem(itemsDao, saleDetail.getItem_detail(), saleDetail.getQty_detail());
         }
 
     }
@@ -109,8 +103,6 @@ public class SaleUpdateController {
             e.printStackTrace();
         }
 
-//        Database.updateData("sales", "status_sale" ,"paid" , "receipt_id", receiptId);
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Update status");
         alert.setHeaderText("Order: " + receiptId + "\n" + salesList.get(0).getCompany());
@@ -122,18 +114,6 @@ public class SaleUpdateController {
     }
 
     private void readDataToTable(){
-//        ResultSet rs = Database.getAllData("sales");
-//        try {
-//            while (rs.next()){
-//
-//                if(rs.getString("status_sale").equals("unpaid")) {
-//                    observableList.add(new Sales(rs.getString("date_sale"), rs.getInt("receipt_id"), rs.getString("company"),
-//                            rs.getInt("qty_sale"), rs.getDouble("total_sale"), rs.getString("status_sale")));
-//                }
-//            }
-//        }catch (SQLException se){
-//            se.printStackTrace();
-//        }
         List<Sales> unpaidList = salesDao.searchByColumnName("status_sale", "unpaid");
         for(Sales sales: unpaidList){
             observableList.add(sales);

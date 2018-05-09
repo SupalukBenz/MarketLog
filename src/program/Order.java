@@ -13,39 +13,42 @@ import java.util.List;
 @DatabaseTable (tableName = "orders")
 public class Order {
 
+    @DatabaseField(id = true)
+    private String item_order;
     @DatabaseField
-    private String item;
+    private String description_order;
     @DatabaseField
-    private String description;
+    private int qty_order;
     @DatabaseField
-    private int quantity;
-    @DatabaseField
-    private double total;
-    @DatabaseField
+    private double total_order;
     private int number;
 
-    public Order( String item, String description, int qty, double total, int num){
-        this.item = item;
-        this.description = description;
-        this.quantity = qty;
-        this.total = total;
-        this.number = num;
+
+    public Order( String item, String description, int qty, double total){
+        this.item_order = item;
+        this.description_order = description;
+        this.qty_order = qty;
+        this.total_order = total;
     }
 
     public Order(){
 
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
     public String getItem() {
-        return item;
+        return item_order;
     }
 
     public int getQuantity() {
-        return quantity;
+        return qty_order;
     }
 
     public double getTotal() {
-        return total;
+        return total_order;
     }
 
     public int getNumber() {
@@ -53,44 +56,8 @@ public class Order {
     }
 
     public String getDescription(){
-        return description;
+        return description_order;
     }
 
-    public static double getAmount() {
-        double amount = 0;
-        ResultSet rs = Database.getAllData("orders");
-        try{
-            while (rs.next()){
-                amount += rs.getDouble("total_order");
-            }
-        } catch (SQLException ex){
-            System.out.println("Cannot get amount from database");
-        }
-        return amount;
-    }
-
-    public static int getQtyOrder(){
-        int qty = 0;
-        ResultSet rs = Database.getAllData("orders");
-        try{
-            while (rs.next()){
-                qty += rs.getDouble("qty_order");
-            }
-        } catch (SQLException ex){
-            System.out.println("Cannot get amount from database");
-        }
-        return qty;
-    }
-
-    public static double sumVat(){
-        double amount = getAmount();
-        double vat = (amount*10)/100;
-        return vat;
-    }
-
-    public static double allTotal(){
-        double all = sumVat() + getAmount();
-        return Math.round(all);
-    }
 
 }

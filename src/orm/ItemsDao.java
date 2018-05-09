@@ -6,6 +6,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import program.Item;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsDao extends BaseDaoImpl<Item, Integer> {

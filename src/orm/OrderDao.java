@@ -3,6 +3,7 @@ package orm;
 import com.j256.ormlite.dao.BaseDaoImpl;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
+import program.Item;
 import program.Order;
 import program.Sales;
 
@@ -27,5 +28,34 @@ public class OrderDao extends BaseDaoImpl<Order, String> {
 
         return orderList;
     }
+
+    public Order getOrderFromKey(String orderName){
+        List<Order> orderList = searchByColumnName("item_order", orderName);
+        return orderList.get(0);
+    }
+
+    public void editedOrder(OrderDao orders,String itemName, int orderAddQty, double orderTotal){
+        Order order = orders.getOrderFromKey(itemName);
+        System.out.println("current order = " + order.getQuantity());
+        int updateQty = order.getQuantity() + orderAddQty;
+        System.out.println("add order = " + updateQty);
+        double updateTotal = order.getTotal() + orderTotal;
+        Order newOrder = new Order(order.getItem(), order.getDescription(), updateQty, updateTotal);
+
+        try {
+            orders.update(newOrder);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public double getAmountOfOrder(OrderDao orders){
+        double amount = 0;
+        for(Order order: orders){
+            amount += order.getTotal();
+        }
+        return amount;
+    }
+
 
 }

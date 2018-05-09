@@ -31,6 +31,13 @@ public class SaleDetail {
         this.qty_detail = qty_detail;
         this.total_detail = total_detail;
     }
+    public SaleDetail(int id_detail, String item_detail, String description_detail, int qty_detail, double total_detail) {
+        this.id_detail = id_detail;
+        this.item_detail = item_detail;
+        this.description_detail = description_detail;
+        this.qty_detail = qty_detail;
+        this.total_detail = total_detail;
+    }
 
     public int getNumber_detail() {
         return number_detail;
