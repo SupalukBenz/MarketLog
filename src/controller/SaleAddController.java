@@ -60,11 +60,7 @@ public class SaleAddController {
     @FXML
     private Button backButton;
 
-    private ResultSet rs = null;
-
     private String get, statusAdd;
-
-    private double totalSave = 0;
 
     private int qtySales = 0;
 

@@ -13,6 +13,7 @@ public class DatabaseManager {
     private SalesDao salesDao = null;
     private OrderDao orderDao = null;
     private SaleDetailDao saleDetailDao = null;
+    private RemindersDao remindersDao = null;
 
     public DatabaseManager(){
         String username = PropertyManager.getProperty("jdbc.user", "");
@@ -76,5 +77,14 @@ public class DatabaseManager {
         return saleDetailDao;
     }
 
-
+    public RemindersDao getRemindersDao(){
+        if(remindersDao == null){
+            try {
+                remindersDao = new RemindersDao(connection);
+            } catch (SQLException se){
+                System.out.println("Cannot connect to SaleDetailDao.");
+            }
+        }
+        return remindersDao;
+    }
 }

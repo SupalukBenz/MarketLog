@@ -81,7 +81,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="calendarButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#calendar" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text="Calendar" textFill="WHITE">
+                  <Button fx:id="calendarButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#calendar" prefHeight="75.0" prefWidth="243.0" style="-fx-background-color: #2d5986;" text="Event" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>

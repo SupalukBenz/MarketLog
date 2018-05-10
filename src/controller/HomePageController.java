@@ -56,6 +56,7 @@ public class HomePageController {
     private void calendar(ActionEvent e){
         initializeColorBotton();
         changeColorButton(calendarButton);
+        ChangePage.loadUI("ReminderUI", pane, HomePageController.class);
     }
 
     @FXML
