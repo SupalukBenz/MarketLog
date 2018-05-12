@@ -21,6 +21,7 @@ public class Reminders{
 
 
     public Reminders(int number_reminders, String date_reminders,String title_reminders,  String event_reminders, String location_reminders, String time_reminders) {
+        super();
         this.number_reminders = number_reminders;
         this.date_reminders = date_reminders;
         this.title_reminders = title_reminders;
@@ -30,6 +31,7 @@ public class Reminders{
     }
 
     public Reminders(String date_reminders,String title_reminders,  String event_reminders, String location_reminders, String time_reminders) {
+        super();
         this.date_reminders = date_reminders;
         this.title_reminders = title_reminders;
         this.event_reminders = event_reminders;

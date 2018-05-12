@@ -29,7 +29,6 @@ public class Report {
             output = fileChooser.showSaveDialog(new Stage());
 
             PdfWriter.getInstance(document, new FileOutputStream(output));
-
             float[] columnWidths = {6, 4, 15, 4, 5, 4};
             PdfPTable reportTable = new PdfPTable(columnWidths);
             reportTable.setSpacingBefore(25);

@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import orm.DatabaseManager;
 import orm.RemindersDao;
 import program.ChangePage;
@@ -26,9 +27,11 @@ import program.Sales;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class ReminderController {
     @FXML
@@ -47,17 +50,12 @@ public class ReminderController {
     private TableColumn<Reminders, String> timeTable;
 
     @FXML
-    private DatePicker dateReminder;
-
+    DatePicker picker;
     @FXML
     private TextField titleReminder, locationReminder, eventReminder, search;
 
     @FXML
     private ComboBox minuteReminder, hourReminder;
-
-    @FXML
-    private Label dateDetail, titleDetail, locationDetail, timeDetail, eventDetail;
-
 
     private String time, event, location, title, hour, minute = "";
     private String date;
@@ -71,9 +69,9 @@ public class ReminderController {
     private void initialize(){
         db = DatabaseManager.getInstance();
         remindersDao = db.getRemindersDao();
+
         remindersToTable();
-        dateReminder = new DatePicker();
-        dateReminder.setValue(LocalDate.now());
+        eventTable.getSortOrder().add(dateTable);
         addTime();
     }
 
@@ -81,7 +79,7 @@ public class ReminderController {
     private void handleAddEvent(ActionEvent e){
         if(check()){
             title = titleReminder.getText();
-            LocalDate localDate = dateReminder.getValue();
+            LocalDate localDate = picker.getValue();
             date = localDate.toString();
             event = eventReminder.getText();
             location = locationReminder.getText();
@@ -89,7 +87,7 @@ public class ReminderController {
             minute = minuteReminder.getValue().toString();
             time = hour + ":" + minute;
 
-            Reminders reminders = new Reminders(date, title, event, location,time);
+            Reminders reminders = new Reminders(remindersDao.getPreviosId(remindersDao)+1, date, title, event, location,time);
 
             try {
                 remindersDao.create(reminders);
@@ -97,7 +95,7 @@ public class ReminderController {
                 e1.printStackTrace();
             }
         }
-
+        eventTable.getSortOrder().add(dateTable);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Added Remainder");
         alert.setHeaderText(null);
@@ -139,11 +137,18 @@ public class ReminderController {
 
     @FXML
     private void handleSearchDetail(){
-        if(!dateReminder.getValue().equals("")) {
-            LocalDate localDate = dateReminder.getValue();
-            date = localDate.toString();
-            search.setText(date);
+        if (picker.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Please, choose date for search or add.");
+            alert.showAndWait();
+        }
 
+        if (picker.getValue()!=null) {
+            LocalDate dateSelected = LocalDate.of(picker.getValue().getYear(), picker.getValue().getMonth(), picker.getValue().getDayOfMonth());
+            date = dateSelected.toString();
+            System.out.println(date);
+            search.setText(date);
             search.textProperty().addListener(new InvalidationListener() {
                 @Override
                 public void invalidated(Observable observable) {
@@ -169,10 +174,32 @@ public class ReminderController {
                     eventTable.setItems(tableData);
                 }
             });
+        };
+
+        eventTable.getSortOrder().add(dateTable);
+    }
+
+    @FXML
+    private void handleDeleteDetail(){
+        if(checkClickTable(eventTable)){
+            ObservableList<Reminders> reminderSelected, allReminders;
+            allReminders = eventTable.getItems();
+            reminderSelected = eventTable.getSelectionModel().getSelectedItems();
+            Reminders deleteReminder = reminderSelected.get(0);
+            try {
+                remindersDao.delete(deleteReminder);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            reminderSelected.forEach(allReminders::remove);
         }
+
+        ChangePage.changeUI("UI/ReminderUI.fxml", pane);
     }
 
     private void remindersToTable(){
+
         for(Reminders reminders: remindersDao){
             remindersList.add(reminders);
         }
@@ -185,20 +212,20 @@ public class ReminderController {
     }
 
     private boolean check(){
-        if(!dateReminder.getValue().equals("") && !titleReminder.getText().trim().isEmpty() && !locationReminder.getText().trim().isEmpty()
+        if(!titleReminder.getText().trim().isEmpty() && !locationReminder.getText().trim().isEmpty()
                 && !eventReminder.getText().trim().isEmpty()) return true;
         return false;
     }
 
     private void addTime(){
         List<String> hourList = new ArrayList<>();
-        for(int i=0; i<=24; i++){
+        for(int i=0; i<=23; i++){
             if(i<=9) hourList.add(String.valueOf("0"+i));
             else hourList.add(String.valueOf(i));
         }
 
         List<String> minuteList = new ArrayList<>();
-        for (int i=0; i<=60; i++){
+        for (int i=0; i<=59; i++){
             if(i<=9) minuteList.add(String.valueOf("0"+i));
             else minuteList.add(String.valueOf(i));
         }

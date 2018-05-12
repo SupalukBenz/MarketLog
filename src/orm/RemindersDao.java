@@ -10,6 +10,7 @@ import java.util.List;
 
 public class RemindersDao extends BaseDaoImpl<Reminders, Integer> {
 
+    private int size = 0;
     public RemindersDao(ConnectionSource connectionSource) throws SQLException {
         super(connectionSource, Reminders.class);
     }
@@ -30,5 +31,12 @@ public class RemindersDao extends BaseDaoImpl<Reminders, Integer> {
     public Reminders getEventFromKey(String tableColumn, int key){
         List<Reminders> getEvent = searchByColumnName(tableColumn, key);
         return getEvent.get(0);
+    }
+
+    public int getPreviosId(RemindersDao remindersDao){
+        for(Reminders reminders: remindersDao){
+            size++;
+        }
+        return size;
     }
 }
