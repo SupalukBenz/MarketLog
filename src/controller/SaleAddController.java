@@ -19,6 +19,8 @@ import java.util.List;
 
 /**
  * SaleAddController is class for adding sales.
+ *
+ * @author Supaluk Jaroensuk
  */
 public class SaleAddController {
 

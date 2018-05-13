@@ -5,27 +5,45 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.sql.*;
-import com.mysql.jdbc.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
+ * Database is class of managing some operations of database.
  *
- *
- * @author Supaluk
+ * @author Supaluk Jaroensuk
  */
 
 public class Database {
 
+    /**
+     * Username that was called by manging property.
+     */
     static final String USER = PropertyManager.getProperty("jdbc.user");
+
+    /**
+     * Password that was called by manging property.
+     */
     static final String PASS = PropertyManager.getProperty("jdbc.password");
 
+    /**
+     *Driver that was called by manging property.
+     */
     static final String JDBC_DRIVER = PropertyManager.getProperty("jdbc.driver");
+
+    /**
+     * URL that was called by manging property.
+     */
     static final String DB_URL = PropertyManager.getProperty("jdbc.url");
 
+    /**
+     * Create the connection object.
+     */
     static Connection connection = null;
 
-
+    /**
+     * Connect with database.
+     */
     public static void connectDatabase(){
         try {
             Class.forName(JDBC_DRIVER);
@@ -37,6 +55,9 @@ public class Database {
         }
     }
 
+    /**
+     * Close database.
+     */
     public static void closeDatabase(){
         if (connection != null){
             try {
@@ -48,6 +69,12 @@ public class Database {
         }
     }
 
+    /**
+     * Select specific item of column in table.
+     * @param tableName is table name of database.
+     * @param columnName is column name that want to get data into list.
+     * @return ObservableList of data in column.
+     */
     public static ObservableList selectItem(String tableName, String columnName){
         ObservableList observableList = FXCollections.observableArrayList();
         PreparedStatement pre = null;
@@ -67,8 +94,10 @@ public class Database {
         return observableList;
     }
 
-
-
+    /**
+     * Dalete all of data in table.
+     * @param tableName is table name that want to delete.
+     */
     public static void deleteAllData(String tableName){
         Statement statement = null;
         connectDatabase();
@@ -86,8 +115,11 @@ public class Database {
         }
     }
 
-
-
+    /**
+     * Create statement demand of database.
+     * @param values is object value.
+     * @return statement, as a String.
+     */
     public static String createStatement(Object ... values){
         StringBuilder data = new StringBuilder();
         for (Object value : values) {

@@ -23,7 +23,7 @@ public class HomePageController {
      * Button on UI
      */
     @FXML
-    private Button dashboardButton, chartButton, itemsButton, saleButton, calendarButton, helpButton;
+    private Button dashboardButton, chartButton, itemsButton, saleButton, calendarButton;
 
     /**
      * Initialize homepage by showing first page of program.
@@ -90,16 +90,6 @@ public class HomePageController {
     }
 
     /**
-     * Action on help button for showing help page.
-     * @param e is action on button.
-     */
-    @FXML
-    private void help(ActionEvent e){
-        initializeColorBotton();
-        changeColorButton(helpButton);
-    }
-
-    /**
      * Initialize color of button.
      */
     private void initializeColorBotton(){
@@ -107,7 +97,6 @@ public class HomePageController {
         chartButton.setStyle("-fx-background-color:  #2d5986");
         saleButton.setStyle("-fx-background-color:  #2d5986");
         itemsButton.setStyle("-fx-background-color:  #2d5986");
-        helpButton.setStyle("-fx-background-color:  #2d5986");
         calendarButton.setStyle("-fx-background-color:  #2d5986");
     }
 

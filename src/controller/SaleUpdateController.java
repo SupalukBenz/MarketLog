@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,50 +15,104 @@ import orm.ItemsDao;
 import orm.SaleDetailDao;
 import orm.SalesDao;
 import program.*;
-import sun.jvm.hotspot.memory.EdenSpace;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * SaleUpdateController is class for update status of sales.
+ *
+ * @author Supaluk Jaroensuk
+ */
 public class SaleUpdateController {
 
+    /**
+     * AnchorPane of UI.
+     */
     @FXML
     AnchorPane pane;
 
+    /**
+     * Textfield for insert data that user want to search.
+     */
     @FXML
     private TextField search;
 
+    /**
+     * TableView for showing list of unpaid orders.
+     */
     @FXML
     private TableView<Sales> tableSaleStatus;
 
+    /**
+     * TableColumn for showing date of unpaid orders.
+     */
     @FXML
     private TableColumn<Sales, String> date;
 
+    /**
+     * TableColumn for showing receipt id of unpaid orders.
+     */
     @FXML
     private TableColumn<Sales, Integer> receiptId;
 
+    /**
+     * TableColumn for showing company of unpaid orders.
+     */
     @FXML
     private TableColumn<Sales, String> company;
 
+    /**
+     * TableColumn for showing quantity of unpaid orders.
+     */
     @FXML
     private TableColumn<Sales, Integer> qty;
 
+    /**
+     * TableColumn for showing total of unpaid orders.
+     */
     @FXML
     private TableColumn<Sales, Double> total;
 
+    /**
+     * TableColumn for showing status of orders.
+     */
     @FXML
     private TableColumn<Sales, String> status;
 
+    /**
+     * ObservableList of Sales for adding data to table.
+     */
     private ObservableList<Sales> observableList = FXCollections.observableArrayList();
+
+    /**
+     * ObservableList of Sales that user selected.
+     */
     private ObservableList<Sales> salesList = FXCollections.observableArrayList();
 
+    /**
+     * DatabaseManager class
+     */
     private DatabaseManager db;
+
+    /**
+     * SalesDao access object for handle all database operation.
+     */
     private SalesDao salesDao = null;
+
+    /**
+     * SaleDetailDao access object for handle all database operation.
+     */
     private SaleDetailDao saleDetailDao = null;
+
+    /**
+     * ItemsDao access object for handle all database operation.
+     */
     private ItemsDao itemsDao = null;
 
+    /**
+     * Initialize DatabaseManager for create SaleDetailDao, ItemsDao, SalesDao and show data of unpaid order to table.
+     */
     @FXML
     private void initialize(){
         db = DatabaseManager.getInstance();
@@ -70,6 +122,9 @@ public class SaleUpdateController {
         readDataToTable();
     }
 
+    /**
+     * Update status to paid.
+     */
     @FXML
     private void handleUpdate(){
         if(tableSaleStatus.getSelectionModel().getSelectedItems().isEmpty()){
@@ -84,6 +139,10 @@ public class SaleUpdateController {
 
     }
 
+    /**
+     * Update quantity stock of items.
+     * @param id is id of sales that was updated.
+     */
     private void listOfItem(int id){
         List<SaleDetail> getIdDetail = saleDetailDao.searchByColumnName("id_detail", id);
         for(SaleDetail saleDetail : getIdDetail){
@@ -92,6 +151,9 @@ public class SaleUpdateController {
 
     }
 
+    /**
+     * Change status of sales in database.
+     */
     private void changeStatus(){
         int receiptId = salesList.get(0).getReceiptId();
         System.out.println("receipt id : " + receiptId);
@@ -113,6 +175,9 @@ public class SaleUpdateController {
         ChangePage.changeUI("UI/SaleUI.fxml", pane);
     }
 
+    /**
+     * Read data from database to table.
+     */
     private void readDataToTable(){
         List<Sales> unpaidList = salesDao.searchByColumnName("status_sale", "unpaid");
         for(Sales sales: unpaidList){
@@ -129,12 +194,18 @@ public class SaleUpdateController {
 
     }
 
+    /**
+     * Filter searching from value that user input.
+     * @param key is action on textfield.
+     */
     @FXML
     private void filter(KeyEvent key){
         Sales.initFilter(search, tableSaleStatus, observableList);
     }
 
-
+    /**
+     * Handle backing to sales page.
+     */
     @FXML
     private void handleBackButton(){
         ChangePage.changeUI("UI/SaleUI.fxml", pane);

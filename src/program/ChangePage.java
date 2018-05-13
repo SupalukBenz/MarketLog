@@ -13,13 +13,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * ChangePage class for managing scene.
  *
- *
- * @author Supaluk
+ * @author Supaluk Jaroensuk
  */
-
 public class ChangePage {
 
+    /**
+     * Load UI when chick button on homepage.
+     * @param UI is UI that want to change.
+     * @param pane is pane of UI that was called.
+     * @param appClass is class of homepage.
+     */
     public static void loadUI(String UI, BorderPane pane, Class appClass){
         Parent root = null;
         try {
@@ -31,6 +36,11 @@ public class ChangePage {
     }
 
 
+    /**
+     * Change scene to other page.
+     * @param fxmlPath is path of UI that want to change.
+     * @param pane is pane of UI that was called.
+     */
     public static void changeUI(String fxmlPath, Pane pane) {
         try {
             URL url = ChangePage.class.getClassLoader().getResource(fxmlPath);

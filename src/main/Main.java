@@ -9,16 +9,27 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+/**
+ * Main class of market log program for running and showing UI of program.
+ *
+ * @author Supaluk Jaroensuk
+ */
 public class Main extends Application {
 
+    /**
+     * x-axis and y-axis, as a double.
+     */
     private double x,y;
 
+    /**
+     * The application initialization method
+     * @param primaryStage is constructed by the platform
+     * @throws Exception prevent null error.
+     */
     @Override
     public void start(final Stage primaryStage) throws Exception {
         try {
-            Parent root = (Parent) FXMLLoader.load(getClass().getResource(setFileName("/UI/HomePage.fxml")));
-//            stageSet = primaryStage;
-//            parent = root;
+            Parent root = (Parent) FXMLLoader.load(getClass().getResource("/UI/HomePage.fxml"));
 
             Scene scene = new Scene(root);
 
@@ -41,7 +52,6 @@ public class Main extends Application {
             primaryStage.getIcons().add(new Image("/UI/photos/MarketLogIcon.png"));
             primaryStage.setTitle("Market Log");
             primaryStage.setScene(scene);
-//            primaryStage.initStyle(StageStyle.TRANSPARENT);
             primaryStage.sizeToScene();
             primaryStage.show();
 
@@ -51,11 +61,10 @@ public class Main extends Application {
 
     }
 
-    public String setFileName(String fileName){
-        return fileName;
-
-    }
-
+    /**
+     * Launch a standalone application
+     * @param args is the command line arguments passed to the application
+     */
     public static void main(String[] args) {
         launch(args);
     }

@@ -15,7 +15,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * Report is a class for generating data to pdf file.
+ *
+ * @author Supaluk Jaroensuk
+ */
 public class Report {
+
+    /**
+     * Generate list all of data in sales to pdf file.
+     * @param salesDao is SalesDao class.
+     */
     public static void salesToPdf(SalesDao salesDao){
 
         Document document = new Document(PageSize.A4, 5, 30, 50, 50);
@@ -132,6 +142,15 @@ public class Report {
         }
     }
 
+    /**
+     * Generate details of sale to pdf file.
+     * @param saleDetailDao is SaleDetailDao class.
+     * @param receiptID is receipt id in sale details.
+     * @param company is company in sale details.
+     * @param status is status in sale details.
+     * @param amount is amount in sale details.
+     * @param vat is vat in sale details.
+     */
     public static void salesDetailToPDF(SaleDetailDao saleDetailDao, int receiptID, String company, String status, double amount, double vat){
 
         Document document = new Document(PageSize.A4, 20, 30, 50, 50);
@@ -257,6 +276,10 @@ public class Report {
 
     }
 
+    /**
+     * Generate list all of items to pdf file.
+     * @param itemsDao is ItemsDao class.
+     */
     public static void saveItemsToPDF(ItemsDao itemsDao){
         Document document = new Document(PageSize.A4, 5, 30, 50, 50);
         FileChooser fileChooser;

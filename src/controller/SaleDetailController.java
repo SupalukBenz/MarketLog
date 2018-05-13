@@ -12,58 +12,110 @@ import javafx.scene.paint.Color;
 import orm.DatabaseManager;
 import orm.SaleDetailDao;
 import orm.SalesDao;
-import program.Database;
 import program.Report;
 import program.SaleDetail;
 import program.Sales;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
-
+/**
+ * SaleDetailController is class for showing details of sales.
+ *
+ * @author Supaluk Jaroensuk
+ */
 public class SaleDetailController {
+
+    /**
+     * AnchorPane of UI
+     */
     @FXML
     AnchorPane pane;
 
+    /**
+     * Text label is details of sale.
+     */
     @FXML
-    private Label receiptId;
+    private Label receiptId, companyName, status, quantity, amount, vat, total, date;
 
-    @FXML
-    private Label companyName, status, quantity, amount, vat, total, date;
-
+    /**
+     * TableView for showing details of sales.
+     */
     @FXML
     private TableView<SaleDetail> detailTable;
 
+    /**
+     * TableColumn for showing number of sale.
+     */
     @FXML
     private TableColumn<SaleDetail, Integer> numberTable;
 
+    /**
+     * TableColumn for showing name of item.
+     */
     @FXML
     private TableColumn<SaleDetail, String> itemNameTable;
 
+    /**
+     * TableColumn for showing quantity of sale.
+     */
     @FXML
     private TableColumn<SaleDetail, Integer> qtyTable;
 
+    /**
+     * TableColumn for showing description of item.
+     */
     @FXML
     private TableColumn<SaleDetail, String> descriptionTable;
 
+    /**
+     * TableColumn for showing total of sale.
+     */
     @FXML
     private TableColumn<SaleDetail, Double> totalTable;
 
+    /**
+     * DatabaseManager class.
+     */
     private DatabaseManager db;
+
+    /**
+     * SaleDetailDao access object for handle all database operation.
+     */
     private SaleDetailDao salesDetail = null;
+
+    /**
+     * SalesDao access object for handle all database operation.
+     */
     private SalesDao sales = null;
 
-    private String companySale = "";
-    private String dateSale = "";
-    private int qtySale = 0;
-    private double totalSale = 0;
-    private String statusSale = "";
-    private int receipt;
-    private ObservableList<SaleDetail> observableList = FXCollections.observableArrayList();
-    private int num = 1;
-    private double amountSale = 0;
+    /**
+     * Detail of order, as a String.
+     */
+    private String companySale, dateSale, statusSale = "";
 
+    /**
+     * Total quantity of items.
+     */
+    private int qtySale = 0;
+
+    /**
+     * Detail of total sales, as a double.
+     */
+    private double totalSale, amountSale = 0;
+
+    /**
+     * Receipt id of sale order, as a int.
+     */
+    private int receipt;
+
+    /**
+     * ObservableList of SaleDetail
+     */
+    private ObservableList<SaleDetail> observableList = FXCollections.observableArrayList();
+
+    /**
+     * Initialize DatabaseManager for create SaleDetailDao and show details of sale.
+     */
     @FXML
     private void initialize(){
         db = DatabaseManager.getInstance();
@@ -76,11 +128,17 @@ public class SaleDetailController {
         setDetail();
     }
 
+    /**
+     * Handle saving details to pdf file.
+     */
     @FXML
     private void handleSaveToPDF(){
         Report.salesDetailToPDF(salesDetail, receipt, companySale, statusSale, amountSale, Double.parseDouble(vat.getText()));
     }
 
+    /**
+     * Read data from database to table.
+     */
     private void readDataToTable(){
         amountSale = 0;
         int number = 0;
@@ -104,6 +162,9 @@ public class SaleDetailController {
         detailTable.setItems(observableList);
     }
 
+    /**
+     * Set details to textfield.
+     */
     private void setDetail(){
 
         List<Sales> salesList = sales.searchByReceiptId(receipt);

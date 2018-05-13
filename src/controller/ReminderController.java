@@ -27,6 +27,8 @@ import java.util.List;
 
 /**
  * ReminderController is class for controller event reminder.
+ *
+ * @author Supaluk Jaroensuk
  */
 public class ReminderController {
 
@@ -132,7 +134,7 @@ public class ReminderController {
             minute = minuteReminder.getValue().toString();
             time = hour + ":" + minute;
 
-            Reminders reminders = new Reminders(remindersDao.getPreviosId(remindersDao)+1, date, title, event, location,time);
+            Reminders reminders = new Reminders(remindersDao.getPreviousId(remindersDao)+1, date, title, event, location,time);
 
             try {
                 remindersDao.create(reminders);
