@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="marketlog:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/marketlog_jar</output-path>
+    <root id="archive" name="marketlog.jar">
+      <element id="module-output" name="marketlog" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/dataLib/mysql-connector-java-5.1.46/mysql-connector-java-5.1.46.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jfoenixLib/jfoenix-8.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ormLib/ormlite-core-5.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ormLib/ormlite-jdbc-5.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/ormLib/itextpdf-5.4.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

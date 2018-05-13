@@ -97,5 +97,10 @@
          </font>
       </Button>
       <DatePicker fx:id="picker" layoutX="66.0" layoutY="159.0" prefHeight="27.0" prefWidth="248.0" />
+      <Button layoutX="753.0" layoutY="76.0" mnemonicParsing="false" onAction="#handleRefresh" prefHeight="19.0" prefWidth="97.0" style="-fx-background-color: #909090;" text="Refresh" textFill="WHITE">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

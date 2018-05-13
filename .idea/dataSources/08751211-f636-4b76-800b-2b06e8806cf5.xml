@@ -1063,6 +1063,7 @@
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="261" parent="233" name="company">
@@ -1082,7 +1083,7 @@
     </column>
     <column id="264" parent="233" name="status_sale">
       <Position>6</Position>
-      <DataType>double|0s</DataType>
+      <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="265" parent="233" name="PRIMARY">

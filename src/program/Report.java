@@ -13,6 +13,7 @@ import orm.SalesDao;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 
 /**
@@ -35,7 +36,8 @@ public class Report {
 
             fileChooser = new FileChooser();
             fileChooser.setInitialFileName("SalesReport.pdf");
-            fileChooser.setInitialDirectory( new File("src"));
+            String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+            fileChooser.setInitialDirectory( new File(currentPath));
             output = fileChooser.showSaveDialog(new Stage());
 
             PdfWriter.getInstance(document, new FileOutputStream(output));
@@ -159,7 +161,8 @@ public class Report {
         try {
             fileChooser = new FileChooser();
             fileChooser.setInitialFileName("Order-"+receiptID+".pdf");
-            fileChooser.setInitialDirectory( new File("src"));
+            String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+            fileChooser.setInitialDirectory( new File(currentPath));
             output = fileChooser.showSaveDialog(new Stage());
 
             PdfWriter.getInstance(document, new FileOutputStream(output));
@@ -288,7 +291,8 @@ public class Report {
 
             fileChooser = new FileChooser();
             fileChooser.setInitialFileName("ItemsReport.pdf");
-            fileChooser.setInitialDirectory( new File("src"));
+            String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
+            fileChooser.setInitialDirectory( new File(currentPath));
             output = fileChooser.showSaveDialog(new Stage());
 
             PdfWriter.getInstance(document, new FileOutputStream(output));

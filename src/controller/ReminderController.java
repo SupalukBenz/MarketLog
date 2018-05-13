@@ -262,6 +262,14 @@ public class ReminderController {
     }
 
     /**
+     * Refresh page.
+     */
+    @FXML
+    private void handleRefresh(){
+        ChangePage.changeUI("UI/ReminderUI.fxml", pane);
+    }
+
+    /**
      * Insert data of event to table.
      */
     private void remindersToTable(){
