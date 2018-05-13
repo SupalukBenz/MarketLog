@@ -36,37 +36,37 @@
                   </AnchorPane>
                   <AnchorPane prefHeight="153.0" prefWidth="277.0" style="-fx-background-color: #484848;">
                      <children>
-                        <Text fill="WHITE" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total order" wrappingWidth="145.19873046875">
+                        <Text fill="WHITE" layoutX="18.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total order" wrappingWidth="145.19873046875">
                            <font>
                               <Font size="22.0" />
                            </font>
                         </Text>
-                        <Label fx:id="totalOrder" alignment="CENTER" layoutX="21.0" layoutY="46.0" prefHeight="24.0" prefWidth="197.0" text="0" textAlignment="CENTER" textFill="WHITE">
+                        <Label fx:id="totalOrder" alignment="CENTER" layoutX="14.0" layoutY="94.0" prefHeight="24.0" prefWidth="197.0" text="0" textAlignment="CENTER" textFill="WHITE">
                            <font>
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Text fill="WHITE" layoutX="222.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order" wrappingWidth="47.18902587890625">
+                        <Text fill="WHITE" layoutX="212.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order" wrappingWidth="47.18902587890625">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Text fill="#8cd98c" layoutX="42.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paid" wrappingWidth="55.19873046875">
+                        <Text fill="#8cd98c" layoutX="35.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paid" wrappingWidth="55.19873046875">
                            <font>
                               <Font size="22.0" />
                            </font>
                         </Text>
-                        <Label fx:id="paidOrder" alignment="TOP_CENTER" layoutX="98.0" layoutY="94.0" prefHeight="32.0" prefWidth="109.0" text="0" textFill="WHITE">
+                        <Label fx:id="paidOrder" alignment="TOP_CENTER" layoutX="91.0" layoutY="22.0" prefHeight="32.0" prefWidth="109.0" text="0" textFill="WHITE">
                            <font>
                               <Font size="23.0" />
                            </font>
                         </Label>
-                        <Text fill="WHITE" layoutX="218.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order" wrappingWidth="55.19873321056366">
+                        <Text fill="WHITE" layoutX="211.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="order" wrappingWidth="55.19873321056366">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <ImageView fitHeight="37.0" fitWidth="30.0" layoutX="12.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="37.0" fitWidth="30.0" layoutX="5.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@photos/check-mark.png" />
                            </image>

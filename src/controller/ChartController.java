@@ -11,29 +11,70 @@ import program.Sales;
 
 import java.time.LocalDate;
 
+/**
+ * ChartController is controller of chart bar that showing sales of months and sales of years.
+ *
+ * @author Supaluk Jaroensuk
+ */
 public class ChartController {
 
+    /**
+     * AnchorPane of pane UI
+     */
     @FXML
     private AnchorPane pane;
 
+    /**
+     * BarChart sales of months
+     */
     @FXML
     private BarChart<String, Double> salesChartMonth;
 
+    /**
+     * BarChart sales of years.
+     */
     @FXML
     private BarChart<String, Double> salesChartYear;
 
+    /**
+     * Text label for show current year.
+     */
     @FXML
     private Label currentYear;
 
+    /**
+     * XYChart for add data of x-axis and y-axis sales of months.
+     */
     private XYChart.Series<String, Double> seriesMonths = new XYChart.Series<>();
-    
+
+    /**
+     * XYChart for add data of x-axis and y-axis sales of year.
+     */
     private XYChart.Series<String, Double> seriesYear = new XYChart.Series<>();
 
+    /**
+     * DatabaseManager class
+     */
     private DatabaseManager db;
+
+    /**
+     * SalesDao access object for handle all database operation.
+     */
     private SalesDao salesDao = null;
+
+    /**
+     * Stored value's each months.
+     */
     private double value1, value2, value3, value4, value5, value6, value7, value8, value9, value10, value11, value12 = 0;
+
+    /**
+     * Stored value's each years.
+     */
     private double value18, value19, value20, value21, value22, value23 = 0;
 
+    /**
+     * Initialize DatabaseManager for create SalesDao and load bar chart.
+     */
     @FXML
     public void initialize(){
         db = DatabaseManager.getInstance();
@@ -43,6 +84,11 @@ public class ChartController {
         loadSalesChartYear();
     }
 
+    /**
+     * Check current year for showing in bar chart.
+     * @param data is date in each sales detail.
+     * @return
+     */
     private boolean checkYear(String data){
         LocalDate date = LocalDate.now();
         String now = date.toString();
@@ -52,6 +98,9 @@ public class ChartController {
         return false;
     }
 
+    /**
+     * Loading data from sales database and showing in bar chart.
+     */
     private void loadSalesChartMonth(){
         String[] dateSplit;
 
@@ -78,7 +127,10 @@ public class ChartController {
         seriesMonths.getData().add(new XYChart.Data<>("December", value12));
         salesChartMonth.getData().add(seriesMonths);
     }
-    
+
+    /**
+     * Loading data from sales database and showing in bar chart.
+     */
     private void loadSalesChartYear(){
         String[] dateSplit;
 
@@ -101,8 +153,12 @@ public class ChartController {
         
     }
 
-
-
+    /**
+     * Storing values in each month.
+      * @param data is month of each sales detail.
+     * @param valueSale is amount in that month.
+     * @return total value in that month.
+     */
     private double sumValue(String data, double valueSale) {
         if (data.equals("01")) return value1 += valueSale;
         else if (data.equals("02")) return value2 += valueSale;
@@ -119,6 +175,12 @@ public class ChartController {
         return 0;
     }
 
+    /**
+     * Storing values in each year.
+     * @param data is year of each sales detail.
+     * @param valueSale is amount in that year.
+     * @return total value in that year.
+     */
     private double sumValueYear(String data, double valueSale){
         if(data.equals("2018")) return value18 += valueSale;
         else if(data.equals("2019")) return value19 += valueSale;

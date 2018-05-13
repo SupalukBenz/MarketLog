@@ -8,25 +8,46 @@ import javafx.scene.layout.AnchorPane;
 import orm.DatabaseManager;
 import orm.ItemsDao;
 import program.ChangePage;
-import program.Database;
 import program.Item;
 
 import java.sql.SQLException;
 
-
+/**
+ * ItemAddController is class for controller adding item.
+ */
 public class ItemsAddController {
 
+    /**
+     * AnchorPane of UI
+     */
     @FXML
     AnchorPane pane;
 
+    /**
+     * Textfield for receiving data.
+     */
     @FXML
     private TextField nameAdd, qtyAdd, descriptionAdd, priceAdd;
 
+    /**
+     * Button for back to item page.
+     */
     @FXML
     private Button backButton;
 
+    /**
+     * Name of item that user want to add.
+     */
     private String nameItem, descriptionItem;
+
+    /**
+     * Price of item that user want to add.
+     */
     private double priceItem;
+
+    /**
+     * Quantity of item that user want to add.
+     */
     private int qtyItem;
 
     @FXML
@@ -34,6 +55,9 @@ public class ItemsAddController {
 
     }
 
+    /**
+     * Handle adding item
+     */
     @FXML
     private void handleAddButton(){
 
@@ -60,36 +84,44 @@ public class ItemsAddController {
         }
     }
 
+    /**
+     * Check textfield that empty or not.
+     * @return true if textfield is not empty, and false if textfield is empty.
+     */
     private boolean isCheck(){
         if(!nameAdd.getText().trim().isEmpty() && !qtyAdd.getText().trim().isEmpty() && !descriptionAdd.getText().trim().isEmpty()
                 && !priceAdd.getText().trim().isEmpty()) return true;
         return false;
     }
 
+    /**
+     * Handle backing to item page.
+     */
     @FXML
     private void handleBackToItems(){
         ChangePage.changeUI("UI/ItemsUI.fxml", pane);
     }
 
+    /**
+     * Check that quantity and price were added be integer or not.
+     * @return true if quantity and price are integer, false if quantity and price are not integer.
+     */
     private boolean checkInteger(){
         if(qtyAdd.getText().trim().matches("^[\\d]+$") && priceAdd.getText().trim().matches("^[\\d]+$")) return true;
         return false;
     }
 
-
-
+    /**
+     * Adding detail of item to database.
+     */
     private void addToDatabase() {
-
         nameItem = nameAdd.getText();
         descriptionItem = descriptionAdd.getText();
         qtyItem = Integer.parseInt(qtyAdd.getText());
         priceItem = Double.parseDouble(priceAdd.getText());
-
-//        Database.insertData("items", nameItem, descriptionItem, qtyItem, priceItem);
         DatabaseManager databaseManager = DatabaseManager.getInstance();
         ItemsDao itemsDao = databaseManager.getItemDao();
-        System.out.println("id previous : " + itemsDao.getLastIdItem(itemsDao));
-        Item item = new Item(nameItem, descriptionItem, priceItem, qtyItem);
+        Item item = new Item(itemsDao.getLastIdItem(itemsDao)+1, nameItem, descriptionItem, priceItem, qtyItem);
         try {
             itemsDao.create(item);
         } catch (SQLException e) {
@@ -97,6 +129,9 @@ public class ItemsAddController {
         }
     }
 
+    /**
+     * Handle clearing data in textfield.
+     */
     @FXML
     private void handleClearButton(){
         nameAdd.clear();

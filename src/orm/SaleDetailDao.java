@@ -5,11 +5,13 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import program.Item;
 import program.SaleDetail;
+import program.Sales;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class SaleDetailDao extends BaseDaoImpl<SaleDetail, Integer> {
+    private int size = 0;
     public SaleDetailDao(ConnectionSource connectionSource) throws SQLException {
         super(connectionSource, SaleDetail.class);
     }
@@ -39,4 +41,6 @@ public class SaleDetailDao extends BaseDaoImpl<SaleDetail, Integer> {
             e.printStackTrace();
         }
     }
+
+
 }

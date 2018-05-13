@@ -7,9 +7,11 @@ import program.Item;
 import program.Sales;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SalesDao extends BaseDaoImpl<Sales, Integer> {
+    private int size = 0;
     public SalesDao(ConnectionSource connectionSource) throws SQLException{
         super(connectionSource, Sales.class);
     }
@@ -57,5 +59,6 @@ public class SalesDao extends BaseDaoImpl<Sales, Integer> {
 
         return saleList.get(0);
     }
+
 
 }

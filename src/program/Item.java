@@ -21,7 +21,7 @@ public class Item {
     private double total_item;
     @DatabaseField
     private int quantity_item;
-    @DatabaseField(generatedId=true)
+    @DatabaseField(id=true)
     private int id_item;
 
     private int number;

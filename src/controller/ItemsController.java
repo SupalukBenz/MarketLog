@@ -14,56 +14,106 @@ import orm.DatabaseManager;
 import orm.ItemsDao;
 import program.*;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 
+/**
+ * ItemsController is class for controller managing items and showing items.
+ *
+ * @author Supaluk Jaroensuk
+ */
 public class ItemsController {
+
+    /**
+     * AnchorPane of UI
+     */
     @FXML
     private AnchorPane pane;
 
+    /**
+     * Textfield for adding text that user want to search.
+     */
     @FXML
     private TextField search;
 
+    /**
+     * TableView, showing all of items in data.
+     */
     @FXML
     private TableView<Item> itemsTable;
 
+    /**
+     * TableColumn for showing name of item.
+     */
     @FXML
     private TableColumn<Item, String> name;
 
+    /**
+     * TableColumn for showing description of item.
+     */
     @FXML
     private TableColumn<Item, String> description;
 
+    /**
+     * TableColumn for showing quantity of item.
+     */
     @FXML
     private TableColumn<Item, Integer> quantity;
 
+    /**
+     * TableColumn for showing price of item.
+     */
     @FXML
     private TableColumn<Item, Double> price;
 
+    /**
+     * TableColumn for showing number of item.
+     */
     @FXML
     private TableColumn<Item, String> number;
 
+    /**
+     * TableColumn for showing id of item.
+     */
     @FXML
     private TableColumn<Item, String> id;
 
+    /**
+     * Total item in table.
+     */
     private int numberTable = 0;
 
+    /**
+     * ObservableList of item data
+     */
     ObservableList<Item> observableList = FXCollections.observableArrayList();
 
+    /**
+     * DatabaseManager class
+     */
     private DatabaseManager db;
+
+    /**
+     * ItemsDao access object for handle all database operation.
+     */
     private ItemsDao itemsDao = null;
 
+    /**
+     * Initialize DatabaseManager for create ItemsDao and show data in table.
+     */
     @FXML
-    public void initialize() throws SQLException {
+    public void initialize()  {
         db = DatabaseManager.getInstance();
         itemsDao = db.getItemDao();
         readDataToTable();
     }
 
-
-    public void readDataToTable() throws SQLException{
+    /**
+     * Read items data to table.
+     */
+    public void readDataToTable() {
         for(Item item: itemsDao){
             numberTable++;
             item.setNumber(numberTable);
@@ -81,16 +131,27 @@ public class ItemsController {
 
     }
 
+    /**
+     * Handle add item button
+     * @param event is action on button.
+     */
     @FXML
     private void handleAddItem(ActionEvent event){
         ChangePage.changeUI("UI/AddItemUI.fxml", pane);
     }
 
+    /**
+     * Filter table for searching.
+     * @param key is action on textfield.
+     */
     @FXML
     private void filter(KeyEvent key){
         intiFilter();
     }
 
+    /**
+     * Get text that user want to search and then filter table for searching.
+     */
     private void intiFilter(){
         search.textProperty().addListener(new InvalidationListener() {
             @Override
@@ -119,14 +180,15 @@ public class ItemsController {
         });
     }
 
+    /**
+     * Handle delete item.
+     */
     @FXML
     private void handleDeleteItem(){
         if(checkClickTable(itemsTable)) {
             ObservableList<Item> itemsSelected, allItems;
             allItems = itemsTable.getItems();
             itemsSelected = itemsTable.getSelectionModel().getSelectedItems();
-            System.out.println("id item delete " + itemsSelected.get(0).getId_item());
-//            Database.deleteData("items", "name_item", itemsSelected.get(0).getName());
             try {
                 //delete from database.
                 itemsDao.deleteById(itemsSelected.get(0).getId_item());
@@ -140,6 +202,11 @@ public class ItemsController {
 
     }
 
+    /**
+     * Check that user select item on table or not.
+     * @param table is TableView item.
+     * @return true if user select item, false if user not select item.
+     */
     private boolean checkClickTable(TableView<?> table){
         if(table.getSelectionModel().getSelectedItems().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -151,6 +218,9 @@ public class ItemsController {
         return true;
     }
 
+    /**
+     * Handle update stock of item.
+     */
     @FXML
     private void handleUpdateItem(){
         if(checkClickTable(itemsTable)) {
@@ -169,11 +239,18 @@ public class ItemsController {
 
     }
 
+    /**
+     * Handel saving list of items to pdf file.
+     */
     @FXML
     private void handleSavePDF(){
         Report.saveItemsToPDF(itemsDao);
     }
 
+    /**
+     * Dialog that was showed when user want to add stock of item.
+     * @param item is name of item that want to add stock.
+     */
     private void inputDialog(String item){
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("Add Stock");
@@ -194,8 +271,12 @@ public class ItemsController {
         }
     }
 
+    /**
+     * Add new quantity of stock to database.
+     * @param result is quantity that was added.
+     * @param item is name of item.
+     */
     private void addStock(int result, String item){
-//        EditValue.updateStock(item, result);
         Item itemUpdate = itemsDao.getItemFromKey("name_item", item);
         System.out.println("update :" + itemUpdate.getId_item());
         int newqty = itemUpdate.getQuantity_item() + result;

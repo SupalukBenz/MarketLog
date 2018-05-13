@@ -5,8 +5,6 @@ import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,57 +12,100 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.util.StringConverter;
 import orm.DatabaseManager;
 import orm.RemindersDao;
 import program.ChangePage;
 import program.Reminders;
-import program.Sales;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * ReminderController is class for controller event reminder.
+ */
 public class ReminderController {
+
+    /**
+     * AnchorPane of UI
+     */
     @FXML
     AnchorPane pane;
 
+    /**
+     * TableView that showing all of events.
+     */
     @FXML
     private TableView<Reminders> eventTable;
 
+    /**
+     * TableColumn for showing date.
+     */
     @FXML
     private TableColumn<Reminders, String> dateTable;
 
+    /**
+     * TableColumn for showing title.
+     */
     @FXML
     private TableColumn<Reminders, String> titleTable;
 
+    /**
+     * TableColumn for showing time.
+     */
     @FXML
     private TableColumn<Reminders, String> timeTable;
 
+    /**
+     * DatePicker for choosing date.
+     */
     @FXML
     DatePicker picker;
+
+    /**
+     * TextField for inserting text about detail for add or search event.
+     */
     @FXML
     private TextField titleReminder, locationReminder, eventReminder, search;
 
+    /**
+     * ComboBox stored minute and hour.
+     */
     @FXML
     private ComboBox minuteReminder, hourReminder;
 
-    private String time, event, location, title, hour, minute = "";
-    private String date;
+    /**
+     * Detail of adding event, as a String.
+     */
+    private String time, event, location, title, hour, minute, date = "";
+
+    /**
+     * Id of event that user want to get detail, as a static for using detail controller.
+     */
     private static int idSearch;
+
+    /**
+     * DatabaseManager class.
+     */
     private DatabaseManager db;
+
+    /**
+     * ReminderDao access object for handle all database operation.
+     */
     private RemindersDao remindersDao = null;
 
+    /**
+     * ObservableList of Reminders
+     */
     private ObservableList<Reminders> remindersList = FXCollections.observableArrayList();
 
+    /**
+     * Initialize DatabaseManager for create ReminderDao and show details events on table.
+     */
     @FXML
     private void initialize(){
         db = DatabaseManager.getInstance();
@@ -75,6 +116,10 @@ public class ReminderController {
         addTime();
     }
 
+    /**
+     * Handle adding event to database.
+     * @param e is action of button.
+     */
     @FXML
     private void handleAddEvent(ActionEvent e){
         if(check()){
@@ -105,6 +150,10 @@ public class ReminderController {
         ChangePage.changeUI("UI/ReminderUI.fxml", pane);
     }
 
+    /**
+     * Handle getting detail of event.
+     * @param event is action on button.
+     */
     @FXML
     private void handleGetDetail(ActionEvent event){
         if(checkClickTable(eventTable)) {
@@ -115,7 +164,7 @@ public class ReminderController {
                 root = (Parent) FXMLLoader.load(getClass().getResource("/UI/ReminderDetailUI.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("Event Detail");
-                stage.setScene(new Scene(root, 600, 500));
+                stage.setScene(new Scene(root, 1000, 400));
                 stage.getIcons().add(new Image("/UI/photos/MarketLogIcon.png"));
                 stage.show();
             } catch (IOException e) {
@@ -125,16 +174,25 @@ public class ReminderController {
         }
     }
 
+    /**
+     * Handle setting value when user selected minute.
+     */
     @FXML
     private void handleSelectMinute(){
         minute = minuteReminder.getValue().toString();
     }
 
+    /**
+     * Handle setting value when user selected hour.
+     */
     @FXML
     private void handleSelectHour(){
         hour = hourReminder.getValue().toString();
     }
 
+    /**
+     * Handle searching event by date.
+     */
     @FXML
     private void handleSearchDetail(){
         if (picker.getValue() == null) {
@@ -179,6 +237,9 @@ public class ReminderController {
         eventTable.getSortOrder().add(dateTable);
     }
 
+    /**
+     * Handle deleting event from database and table.
+     */
     @FXML
     private void handleDeleteDetail(){
         if(checkClickTable(eventTable)){
@@ -198,6 +259,9 @@ public class ReminderController {
         ChangePage.changeUI("UI/ReminderUI.fxml", pane);
     }
 
+    /**
+     * Insert data of event to table.
+     */
     private void remindersToTable(){
 
         for(Reminders reminders: remindersDao){
@@ -211,12 +275,19 @@ public class ReminderController {
         eventTable.setItems(remindersList);
     }
 
+    /**
+     * Check that text of details event was inserted or not.
+     * @return true if textfield is not empty, and false if textfield is empty.
+     */
     private boolean check(){
         if(!titleReminder.getText().trim().isEmpty() && !locationReminder.getText().trim().isEmpty()
                 && !eventReminder.getText().trim().isEmpty()) return true;
         return false;
     }
 
+    /**
+     * Add minute and hour to ComboBox.
+     */
     private void addTime(){
         List<String> hourList = new ArrayList<>();
         for(int i=0; i<=23; i++){
@@ -238,6 +309,11 @@ public class ReminderController {
         minute = minuteReminder.getValue().toString();
     }
 
+    /**
+     * Check that user selected event on table or not.
+     * @param table
+     * @return
+     */
     private boolean checkClickTable(TableView<?> table){
         if(table.getSelectionModel().getSelectedItems().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -249,6 +325,10 @@ public class ReminderController {
         return true;
     }
 
+    /**
+     * Get id that user selected.
+     * @return id was selected, as a int.
+     */
     public static int getId(){
         return idSearch;
     }

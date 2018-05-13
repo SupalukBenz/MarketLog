@@ -17,7 +17,7 @@
             <Font size="42.0" />
          </font>
       </Text>
-      <TableView fx:id="tableSale" layoutX="10.0" layoutY="163.0" prefHeight="368.0" prefWidth="843.0">
+      <TableView fx:id="tableSale" layoutX="10.0" layoutY="163.0" prefHeight="356.0" prefWidth="843.0">
         <columns>
           <TableColumn fx:id="date" prefWidth="85.0" text="Date" />
           <TableColumn fx:id="receiptId" prefWidth="104.0" text="Receipt ID" />
@@ -54,7 +54,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="342.0" layoutY="548.0" mnemonicParsing="false" onAction="#handleShowDetail" prefHeight="59.0" prefWidth="179.0" style="-fx-background-color: #1f7a7a; -fx-border-radius: 10;" text="Show Detail" textFill="WHITE">
+      <Button layoutX="342.0" layoutY="531.0" mnemonicParsing="false" onAction="#handleShowDetail" prefHeight="59.0" prefWidth="179.0" style="-fx-background-color: #1f7a7a; -fx-border-radius: 10;" text="Show Detail" textFill="WHITE">
          <font>
             <Font size="21.0" />
          </font>
