@@ -2,6 +2,12 @@
 
 [Download marketlog.jar](https://github.com/SupalukBenz/MarketLog/releases/download/1.0/marketlog.jar)
 
+### Supaluk Jaroensuk
+601054935
+
+### Project
+  Market Log project is inventory program that consist of dashboard mode, sales mode, items mode and event mode. It can manage stock of item for sales and add milestone events.
+
 ## Dashboard mode
 <img width="1116" alt="screen shot 2561-05-14 at 16 27 30" src="https://user-images.githubusercontent.com/32286346/39989468-389e018e-5794-11e8-9f8e-fd53e35b5151.png">
 
