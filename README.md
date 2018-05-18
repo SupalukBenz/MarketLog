@@ -9,6 +9,9 @@
   Market Log project is inventory program that consist of dashboard mode, sales mode, items mode and event mode. It can manage stock of item for sales and add milestone events.
   
   All data of project were stored on mySQL database and used ORMLite for supportign the following mySQL database.
+  
+  <img width="1083" alt="screen shot 2561-05-18 at 12 31 50" src="https://user-images.githubusercontent.com/32286346/40217536-867546b4-5a97-11e8-8039-3dfb1678cbd2.png">
+
 
 ## Dashboard mode
   Dashboard that provides overiew of program.
